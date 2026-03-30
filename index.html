@@ -35,10 +35,10 @@
     /* ── Mondrian structural frame ── */
     .m-left  { position: fixed; left: 0; top: 0; bottom: 0; width: 12px; background: var(--black); z-index: 200; }
     .m-top   { position: fixed; left: 0; right: 0; top: 0; height: 12px; background: var(--black); z-index: 200; }
-    .m-corner-red    { position: fixed; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); }
-    .m-corner-blue   { position: fixed; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); }
-    .m-corner-yellow { position: fixed; bottom: 0; right: 0; width: 180px; height: 80px; background: var(--yellow); z-index: 190; border-left: var(--border); border-top: var(--border); }
-    .m-corner-black  { position: fixed; bottom: 0; left: 12px; width: 64px; height: 48px; background: var(--black); z-index: 190; }
+    .m-corner-1 { position: fixed; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); }
+    .m-corner-2 { position: fixed; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); }
+    .m-corner-3 { position: fixed; bottom: 0; right: 0; width: 180px; height: 80px; background: var(--yellow); z-index: 190; border-left: var(--border); border-top: var(--border); }
+    .m-corner-black { position: fixed; bottom: 0; left: 12px; width: 64px; height: 48px; background: var(--black); z-index: 190; }
 
     /* ── Page system ── */
     .page { display: none; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
@@ -76,13 +76,13 @@
       align-items: center;
       text-decoration: none; cursor: pointer;
       padding: 0 22px 18px 22px;
-      height: 154px;
+      height: 150px;
       flex-shrink: 0;
       width: 100%;
     }
     .logo-word {
       font-family: var(--font-display);
-      font-size: clamp(32px, 3vw, 48px);
+      font-size: clamp(48px, 6.5vw, 80px);
       font-weight: 400; letter-spacing: -0.03em;
       color: var(--black); line-height: 1; text-transform: lowercase;
     }
@@ -427,7 +427,7 @@
 
     /* ── Responsive ── */
     @media (max-width: 760px) {
-      .m-corner-blue { display: none; }
+      .m-corner-2 { display: none; }
       .header-nav-cell { display: none; }
       .site-header { grid-template-columns: 1fr; }
       .header-left-cell { display: none; }
@@ -446,15 +446,79 @@
       .contact-right { padding: 36px 28px; }
       .form-row { grid-template-columns: 1fr; gap: 20px; }
     }
+    /* ══════════════════════════════════════
+       IMPRESSUM PAGE
+    ══════════════════════════════════════ */
+    .impressum-main {
+      flex: 1; display: grid; grid-template-columns: 340px 5px 1fr;
+      position: relative; z-index: 10; min-height: 560px;
+    }
+    .impressum-left {
+      padding: 52px 48px 52px 48px;
+      display: flex; flex-direction: column;
+      background: var(--white); position: relative;
+    }
+    .impressum-color-block { position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: var(--blue); }
+    .impressum-divider { background: var(--black); width: 5px; }
+    .impressum-right { padding: 52px 56px 52px 52px; display: flex; flex-direction: column; gap: 48px; max-width: 680px; }
+
+    .impressum-eyebrow {
+      font-size: 8px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: #aaa; font-weight: 300;
+      margin-bottom: 20px; margin-top: 28px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .impressum-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 5px;
+      background: var(--blue); flex-shrink: 0;
+    }
+    .impressum-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 68px);
+      font-weight: 400; letter-spacing: -0.04em;
+      color: var(--black); line-height: 0.95;
+      text-transform: lowercase; margin-bottom: 16px;
+    }
+    .impressum-note {
+      font-size: 13px; line-height: 1.85;
+      color: #888; font-weight: 300; font-style: italic; margin-top: 28px;
+    }
+
+    .imp-section-title {
+      font-size: 8px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: #aaa; font-weight: 300;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .imp-section-title::before {
+      content: ''; display: block; width: 10px; height: 10px;
+      background: var(--black); flex-shrink: 0;
+    }
+    .imp-section { border-top: var(--border); padding-top: 24px; }
+    .imp-body {
+      font-size: 13px; line-height: 1.95; color: #666; font-weight: 300;
+    }
+    .imp-body strong { font-weight: 400; color: var(--black); }
+    .imp-address {
+      font-size: 14px; line-height: 2; color: var(--black);
+      font-weight: 300; font-style: normal;
+    }
+
+    @media (max-width: 760px) {
+      .impressum-main { grid-template-columns: 1fr; }
+      .impressum-divider { display: none; }
+      .impressum-left { padding: 36px 28px; border-bottom: var(--border-thick); }
+      .impressum-right { padding: 36px 28px; }
+    }
   </style>
 </head>
 <body>
 
   <div class="m-left"></div>
   <div class="m-top"></div>
-  <div class="m-corner-red"></div>
-  <div class="m-corner-blue"></div>
-  <div class="m-corner-yellow"></div>
+  <div class="m-corner-1"></div>
+  <div class="m-corner-2"></div>
+  <div class="m-corner-3"></div>
   <div class="m-corner-black"></div>
 
   <!-- HOME PAGE -->
@@ -478,6 +542,7 @@
       <!-- Right: nav -->
       <div class="header-nav-cell">
         <a class="nav-link" onclick="goContact()">Contact</a>
+        <a class="nav-link" onclick="goImpressum()">Legal</a>
       </div>
     </header>
 
@@ -627,7 +692,10 @@
 
     <footer class="site-footer">
       <span class="footer-left">by appointment</span>
-      <span class="footer-right">pumpolino.com</span>
+      <span style="display:flex;gap:24px;">
+        <span class="footer-right" onclick="goImpressum()">Legal Notice</span>
+        <span class="footer-right">pumpolino.com</span>
+      </span>
     </footer>
   </div>
 
@@ -721,20 +789,98 @@
     </footer>
   </div>
 
+  <!-- IMPRESSUM PAGE -->
+  <div class="page" id="page-impressum">
+
+    <header class="site-header">
+      <div class="header-left-cell"></div>
+      <div class="header-center-cell">
+        <a class="logo" onclick="goHome()" style="cursor:pointer" tabindex="0">
+          <div class="logo-word">pump<em>o</em>lino</div>
+          <div class="logo-domain">pumpolino.com</div>
+        </a>
+        <div class="header-tagline-cell">
+          <div class="header-tagline">Precision,<br>applied.</div>
+        </div>
+      </div>
+      <div class="header-nav-cell">
+        <a class="nav-link" onclick="goHome()">← Home</a>
+      </div>
+    </header>
+
+    <div class="impressum-main">
+      <div class="impressum-left">
+        <div class="impressum-color-block"></div>
+        <div class="impressum-eyebrow">Legal Notice</div>
+        <div class="impressum-title">Legal<br>Notice.</div>
+        <p class="impressum-note">As of 2025</p>
+      </div>
+
+      <div class="impressum-divider"></div>
+
+      <div class="impressum-right">
+
+        <div class="imp-section">
+          <div class="imp-section-title">Company Details</div>
+          <address class="imp-address">
+            <strong>Pumpolino GmbH</strong><br>
+            Musterstrasse 12<br>
+            8001 Zürich<br>
+            Switzerland
+          </address>
+        </div>
+
+        <div class="imp-section">
+          <div class="imp-section-title">Disclaimer</div>
+          <div class="imp-body">
+            The contents of this website have been compiled with the greatest possible care. However, Pumpolino accepts no responsibility for the accuracy, completeness or timeliness of the information provided. As a service provider, we are responsible for our own content on these pages in accordance with applicable law.<br><br>
+            We are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information in accordance with general law remain unaffected.<br><br>
+            Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator of those pages is always responsible for their content. We accept no liability for any such linked content.
+          </div>
+        </div>
+
+        <div class="imp-section">
+          <div class="imp-section-title">Privacy</div>
+          <div class="imp-body">
+            It is generally possible to use our website without providing personal data. Where personal data (such as name, address or email address) is collected on our pages, this is always on a voluntary basis.<br><br>
+            We point out that data transmission over the internet (e.g. communication by email) may be subject to security vulnerabilities. Complete protection of data from access by third parties is not possible.<br><br>
+            We hereby expressly object to the use of contact data published as part of our legal notice obligation by third parties for the purpose of sending unsolicited advertising and informational materials.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span class="footer-left">by appointment</span>
+      <span class="footer-right" onclick="goHome()">← Back to home</span>
+    </footer>
+  </div>
+
   <script>
     var current = 0;
     var refOpen = false;
 
-    function goHome() {
-      document.getElementById('page-home').classList.add('active');
-      document.getElementById('page-contact').classList.remove('active');
+    // Random corner colours on each page load
+    (function() {
+      var colours = ['#D32F2F', '#1565C0', '#F9A825'];
+      for (var i = colours.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = colours[i]; colours[i] = colours[j]; colours[j] = tmp;
+      }
+      document.querySelector('.m-corner-1').style.background = colours[0];
+      document.querySelector('.m-corner-2').style.background = colours[1];
+      document.querySelector('.m-corner-3').style.background = colours[2];
+    })();
+
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
       window.scrollTo(0,0);
     }
-    function goContact() {
-      document.getElementById('page-home').classList.remove('active');
-      document.getElementById('page-contact').classList.add('active');
-      window.scrollTo(0,0);
-    }
+    function goHome() { showPage('page-home'); }
+    function goContact() { showPage('page-contact'); }
+    function goImpressum() { showPage('page-impressum'); }
 
     function expand(n) {
       if (current === n) return;
