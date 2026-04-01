@@ -59,7 +59,7 @@
     .m-corner-2:hover .m-corner-label,
     .m-corner-3:hover .m-corner-label { opacity: 1; }
     .page { display: none; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
-    .page.active { display: flex; }
+    .page.active { display: flex; min-height: 100vh; }
 
     /* ── Header ── */
     .site-header {
@@ -552,7 +552,10 @@
       .header-left-cell { display: block; min-width: 96px; }
       .header-center-cell { border-left: none; }
       .panel { padding: 36px 28px; }
-      .panels { grid-template-columns: 1fr; grid-template-rows: auto 5px auto 5px auto; min-height: auto; }
+      .panels { display: flex; flex-direction: column; grid-template-columns: unset; grid-template-rows: unset; min-height: auto; flex: 1; }
+      .panel-3-row { grid-column: unset; border-top: var(--border-thick); }
+      .panel-divider { width: 100%; height: 5px; flex-shrink: 0; }
+      .panels.expanded-1, .panels.expanded-2, .panels.expanded-3 { grid-template-columns: unset; grid-template-rows: unset; }
       .panel-divider { width: 100%; height: 5px; }
       .panels.expanded-1, .panels.expanded-2, .panels.expanded-3 { grid-template-columns: 1fr; grid-template-rows: auto; }
       .panels.expanded-1 .panel-2, .panels.expanded-1 .panel-3,
@@ -628,7 +631,7 @@
             <div class="exp-right">
               <div class="exp-intro">We work where <strong>complexity asks for calm.</strong></div>
               <div class="exp-body">
-                Systems that move — water, information, decisions.<br><br>
+                Systems that move: water, information, decisions.<br><br>
                 Pumpolino brings deep technical fluency to industrial process consulting, paired with the clarity of modern data architecture and applied intelligence.
               </div>
               <button class="btn-ref" id="btn-ref" onclick="toggleRef(event)">
@@ -736,7 +739,7 @@
               <div class="exp-intro">We work where <strong>meaning asks for discretion.</strong></div>
               <div class="exp-body">
                 Objects of significance, handled with patience.<br><br>
-                Pumpolino accompanies works of art through the careful architecture of acquisition, placement, and exhibition — in dialogue with museums, foundations, and private collections.
+                Pumpolino accompanies works of art through the careful architecture of acquisition, placement, and exhibition, in dialogue with museums, foundations, and private collections.
               </div>
             </div>
           </div>
@@ -753,6 +756,7 @@
             <div class="panel-title" style="font-size: clamp(22px, 3vw, 38px); letter-spacing: 0.01em;">Industrial Pumps &amp; Art</div>
             <div class="panel-sub" style="margin-top: 8px; margin-bottom: 16px;">form finds function</div>
             <div class="panel-cta">Enter →</div>
+            <br><br>
           </div>
 
           <div class="expanded-inner" style="margin-top: 0;">
@@ -773,49 +777,49 @@
                 <div class="p3-list-num">2</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Central Data Management for Technical and Cultural Assets</div>
-                  <div class="p3-list-text">Service history consolidation, product customisations, artwork provenance — one platform approach that unifies the technical and the cultural into a single source of truth.</div>
+                  <div class="p3-list-text">Service history consolidation, product customisations, artwork provenance. One platform approach that unifies the technical and the cultural into a single source of truth.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">3</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Automation and Proactive Stewardship</div>
-                  <div class="p3-list-text">Service interval notifications for pumps, conservation schedules for collections — intelligent automation that anticipates the needs of both engineering assets and cultural ones.</div>
+                  <div class="p3-list-text">Service interval notifications for pumps, conservation schedules for collections. Intelligent automation that anticipates the needs of both engineering assets and cultural ones.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">4</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Resource Planning Across Engineering and Collections</div>
-                  <div class="p3-list-text">Optimal allocation principles applied to both domains — the same rigour that schedules a pump maintenance cycle applied to the stewardship of a collection.</div>
+                  <div class="p3-list-text">Optimal allocation principles applied to both domains, with the same rigour that schedules a pump maintenance cycle applied to the stewardship of a collection.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">5</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Technician and Specialist Deployment</div>
-                  <div class="p3-list-text">Spare parts logistics, conservator scheduling, museum and foundation coordination — precision deployment of the right expertise at the right moment.</div>
+                  <div class="p3-list-text">Spare parts logistics, conservator scheduling, museum and foundation coordination. Precision deployment of the right expertise at the right moment.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">6</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Objects of Significance: Handling with Patience</div>
-                  <div class="p3-list-text">Industrial equipment lifecycle, art manuals, dialogue with private collections — every object, whether mechanical or artistic, deserves a custodian who understands its value.</div>
+                  <div class="p3-list-text">Industrial equipment lifecycle, art manuals, dialogue with private collections. Every object, whether mechanical or artistic, deserves a custodian who understands its value.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">7</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Building Applied Intelligence into Your Operations</div>
-                  <div class="p3-list-text">Data architecture that serves both technical fluency and aesthetic documentation — intelligence embedded into the operational layer, not bolted on top of it.</div>
+                  <div class="p3-list-text">Data architecture that serves both technical fluency and aesthetic documentation. Intelligence embedded into the operational layer, not bolted on top of it.</div>
                 </div>
               </div>
               <div class="p3-list-item">
                 <div class="p3-list-num">8</div>
                 <div class="p3-list-body">
                   <div class="p3-list-title">Implementing a Unified Platform</div>
-                  <div class="p3-list-text">Steps for board-level adoption and transparency for stakeholders — a phased implementation that brings clarity to complex organisations managing both industrial and cultural assets.</div>
+                  <div class="p3-list-text">Steps for board-level adoption and transparency for stakeholders. A phased implementation that brings clarity to complex organisations managing both industrial and cultural assets.</div>
                 </div>
               </div>
             </div>
@@ -861,7 +865,7 @@
         <div class="contact-eyebrow">Contact</div>
         <div class="contact-title">Write<br>to us.</div>
         <p class="contact-note">
-          We reply <strong>personally</strong> —<br>
+          We reply <strong>personally.</strong><br>
           no templates,<br>no automation.<br><br>
           pumpolino.com
         </p>
