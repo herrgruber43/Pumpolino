@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumpolino</title>
+  <title>Pumpolino v1.27</title>
   <meta name="description" content="Precision, applied." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,7 +65,7 @@
     .site-header {
       position: relative; z-index: 10;
       display: grid;
-      grid-template-columns: 0px 1fr 140px;
+      grid-template-columns: 0px 1fr 154px;
       align-items: stretch;
       border-bottom: var(--border-thick);
       background: var(--white);
@@ -123,9 +123,10 @@
     }
 
     .header-nav-cell {
-      width: 140px;
+      width: 154px;
       display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 0 0 22px 0;
+      justify-content: flex-end;
+      padding: 0 0 22px 0;
       align-items: center; gap: 10px;
     }
     .nav-link {
@@ -148,6 +149,17 @@
     .panel-3-row {
       grid-column: 1 / -1;
       border-top: var(--border-thick);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .panel-3-row:hover {
+      background: rgba(249,168,37,0.04);
+    }
+    .panels.expanded-3 .panel-3-row {
+      cursor: default;
+    }
+    .panels.expanded-3 .panel-3-row:hover {
+      background: transparent;
     }
     .panel-3-row .panel-3 {
       padding-top: 10px;
@@ -161,6 +173,8 @@
       overflow: hidden; position: relative;
     }
     .panel:hover { background: rgba(249,168,37,0.04); }
+    /* Panel 3 sits inside panel-3-row which handles hover — remove double-hover */
+    .panel-3:hover { background: transparent; }
     .panel-bar {
       position: absolute; top: 0; left: 0; right: 0; height: 10px;
       transition: height 0.3s;
@@ -168,6 +182,8 @@
     .panel-bar.blue { background: var(--blue); }
     .panel-bar.red  { background: var(--red); }
     .panel:hover .panel-bar { height: 14px; }
+    .panel-3-row:hover .panel-3 .panel-bar { height: 14px; }
+    .panels.expanded-3 .panel-3-row:hover .panel-3 .panel-bar { height: 10px; }
 
     .panel-number {
       font-size: 8px; letter-spacing: 0.3em; color: #ccc;
@@ -198,6 +214,8 @@
       transition: color 0.25s, letter-spacing 0.3s; margin-top: 40px;
     }
     .panel:hover .panel-cta { color: var(--black); letter-spacing: 0.52em; }
+    .panel-3-row:hover .panel-cta { color: var(--black); letter-spacing: 0.52em; }
+    .panels.expanded-3 .panel-3-row:hover .panel-cta { color: #ccc; letter-spacing: 0.4em; }
 
     /* Expanded */
     .panels.expanded-1 { grid-template-columns: 1fr 5px 0fr 5px 0fr; }
@@ -368,6 +386,8 @@
     .footer-left { font-size: 9px; letter-spacing: 0.28em; color: #bbb; font-weight: 300; text-transform: lowercase; }
     .footer-right { font-size: 9px; letter-spacing: 0.2em; color: #bbb; font-weight: 300; cursor: pointer; transition: color 0.2s; }
     .footer-right:hover { color: var(--black); }
+
+
 
     /* CONTACT PAGE */
     .contact-main {
@@ -743,8 +763,8 @@
         </div>
       </div>
 
-      <div class="panel-3-row">
-        <div class="panel panel-3" onclick="expand(3)" role="button" tabindex="0" aria-label="Industrial Pumps and Art">
+      <div class="panel-3-row" onclick="expand(3)" role="button" tabindex="0" aria-label="Industrial Pumps and Art">
+        <div class="panel panel-3">
           <div class="panel-bar" style="background: var(--yellow);"></div>
 
           <div class="collapsed p3-collapsed">
@@ -909,7 +929,6 @@
     </div>
 
     <footer class="site-footer">
-      
       <span class="footer-right" onclick="goHome()">← Back to home</span>
     </footer>
   </div>
@@ -970,7 +989,6 @@
     </div>
 
     <footer class="site-footer">
-      
       <span class="footer-right" onclick="goHome()">← Back to home</span>
     </footer>
   </div>
@@ -1009,7 +1027,6 @@
       current = n;
       document.getElementById('panels').className = 'panels expanded-' + n;
       if (n !== 1) closeRef();
-
     }
     function collapse(e) {
       e.stopPropagation();
