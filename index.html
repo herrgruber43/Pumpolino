@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumpolino v1.27</title>
+  <title>Pumpolino v1.40</title>
   <meta name="description" content="Precision, applied." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,10 +35,13 @@
     /* ── Mondrian structural frame ── */
     .m-left  { position: fixed; left: 0; top: 0; bottom: 0; width: 12px; background: var(--black); z-index: 200; }
     .m-top   { position: fixed; left: 0; right: 0; top: 0; height: 12px; background: var(--black); z-index: 200; }
-    .m-corner-1 { position: fixed; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); }
-    .m-corner-2 { position: fixed; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); }
-    .m-corner-3 { position: fixed; bottom: 0; right: 0; width: 180px; height: 80px; background: var(--yellow); z-index: 190; border-left: var(--border); border-top: var(--border); }
-    .m-corner-black { position: fixed; bottom: 0; left: 12px; width: 64px; height: 48px; background: var(--black); z-index: 190; }
+    .m-corner-1 { position: absolute; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); }
+    .m-corner-2 { position: absolute; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); }
+    .m-corner-3 { width: 180px; height: 80px; background: var(--yellow); z-index: 190; border-left: var(--border); border-top: var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
+    .m-corner-3:hover { opacity: 0.6; }
+    .m-corner-3.hidden { opacity: 0; pointer-events: none; }
+    .m-corner-black { width: 64px; height: 48px; background: var(--black); z-index: 190; flex-shrink: 0; }
+    .footer-bottom-corners { display: flex; align-items: flex-end; justify-content: space-between; margin-left: -12px; }
 
     .m-corner-1, .m-corner-2, .m-corner-3 {
       cursor: pointer;
@@ -58,7 +61,7 @@
     .m-corner-1:hover .m-corner-label,
     .m-corner-2:hover .m-corner-label,
     .m-corner-3:hover .m-corner-label { opacity: 1; }
-    .page { display: none; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
+    .page { display: none; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; position: relative; }
     .page.active { display: flex; min-height: 100vh; }
 
     /* ── Header ── */
@@ -302,6 +305,7 @@
     .ref-inner {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 56px; padding-top: 36px; padding-bottom: 8px;
+      align-items: end;
     }
     .ref-tag {
       display: inline-flex; align-items: center; gap: 0; margin-bottom: 18px;
@@ -370,7 +374,7 @@
     }
     .btn-back:hover { color: var(--black); }
     .panels.expanded-1 .panel-3-row,
-    .panels.expanded-2 .panel-3-row { border-top: none; }
+    .panels.expanded-2 .panel-3-row { display: none; }
     .panels.expanded-3 .panel-3-row { border-top: var(--border-thick); }
     .panels.expanded-1 .panel-1 .btn-back,
     .panels.expanded-2 .panel-2 .btn-back,
@@ -379,9 +383,9 @@
     /* ── Footer ── */
     .site-footer {
       position: relative; z-index: 10; border-top: var(--border-thick);
-      padding: 16px 56px 16px 52px;
+      padding: 8px 56px 8px 52px;
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--white); margin-bottom: 80px;
+      background: var(--white); margin-bottom: 0;
     }
     .footer-left { font-size: 9px; letter-spacing: 0.28em; color: #bbb; font-weight: 300; text-transform: lowercase; }
     .footer-right { font-size: 9px; letter-spacing: 0.2em; color: #bbb; font-weight: 300; cursor: pointer; transition: color 0.2s; }
@@ -581,7 +585,7 @@
       .panels.expanded-1 .panel-divider, .panels.expanded-2 .panel-divider, .panels.expanded-3 .panel-divider { display: none; }
       .exp-grid { grid-template-columns: 1fr; gap: 28px; }
       .ref-inner { grid-template-columns: 1fr; gap: 32px; }
-      .site-footer { padding: 14px 28px; margin-bottom: 64px; }
+      .site-footer { padding: 8px 28px; margin-bottom: 0; }
       .contact-main { grid-template-columns: 1fr; }
       .contact-divider { display: none; }
       .contact-left { padding: 36px 28px; border-bottom: var(--border-thick); }
@@ -600,8 +604,6 @@
   <div class="m-top"></div>
   <div class="m-corner-1" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
   <div class="m-corner-2" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
-  <div class="m-corner-3" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
-  <div class="m-corner-black"></div>
 
   <!-- HOME PAGE -->
   <div class="page active" id="page-home">
@@ -640,8 +642,7 @@
         <div class="expanded-inner">
           <div class="exp-grid">
             <div>
-              <div class="panel-number">01</div>
-              <div class="exp-title">Process &amp;<br>Intelligence</div>
+                <div class="exp-title">Process &amp;<br>Intelligence</div>
               <div class="exp-sub">Consulting · Data · AI</div>
             </div>
             <div class="exp-right">
@@ -747,8 +748,7 @@
         <div class="expanded-inner">
           <div class="exp-grid">
             <div>
-              <div class="panel-number">02</div>
-              <div class="exp-title">Art &amp;<br>Provenance</div>
+                <div class="exp-title">Art &amp;<br>Provenance</div>
               <div class="exp-sub">Museums · Collections · Exhibition</div>
             </div>
             <div class="exp-right">
@@ -777,7 +777,6 @@
 
           <div class="expanded-inner" style="margin-top: 0;">
             <div style="margin-bottom: 36px; text-align: center;">
-              <div class="panel-number" style="margin-top: 0; margin-bottom: 8px;">03</div>
               <div class="exp-title" style="font-size: clamp(32px, 4vw, 48px);">Industrial Pumps &amp; Art</div>
             </div>
 
@@ -854,6 +853,10 @@
         <span class="footer-right">pumpolino.com</span>
       </span>
     </footer>
+    <div class="footer-bottom-corners">
+      <div class="m-corner-black"></div>
+      <div class="m-corner-3" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
+    </div>
   </div>
 
   <!-- CONTACT PAGE -->
