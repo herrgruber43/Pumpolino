@@ -3,8 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumpolino v1.46</title>
+  <title>Pumpolino v1.48</title>
   <meta name="description" content="Precision, applied." />
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  PUMPOLINO — CHANGELOG                                          ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  v1.48  2026-04-04                                              ║
+  ║    - Panel 1: all em-dashes removed from visible text           ║
+  ║      replaced with new sentences or commas                      ║
+  ║                                                                 ║
+  ║  v1.47  2026-04-04                                              ║
+  ║    - Panel 1: ServiceFlow & FlowSales redesigned to match       ║
+  ║      Panel 3 layout language (serif section titles, border-left  ║
+  ║      accents, prose-heavy description blocks, no card grid)     ║
+  ║    - Removed .p1-cards grid; replaced with .p1-feature blocks   ║
+  ║    - .p1-steps retained but visually tightened                  ║
+  ║    - No changes to Panel 2, Panel 3, Contact, Impressum         ║
+  ║                                                                 ║
+  ║  v1.46  (baseline)                                              ║
+  ║    - Initial release                                            ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -105,9 +125,6 @@
       color: var(--black); line-height: 1; text-transform: lowercase;
     }
     .logo-word em { font-style: italic; color: var(--red); }
-    .logo-symbol { display: flex; flex-shrink: 0; }
-    .logo-symbol img { width: 36px; height: 36px; object-fit: contain; }
-    .logo-inner { display: flex; align-items: center; gap: 14px; }
 
     .header-tagline-cell {
       border-top: var(--border);
@@ -157,18 +174,10 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .panel-3-row:hover {
-      background: rgba(249,168,37,0.04);
-    }
-    .panels.expanded-3 .panel-3-row {
-      cursor: default;
-    }
-    .panels.expanded-3 .panel-3-row:hover {
-      background: transparent;
-    }
-    .panel-3-row .panel-3 {
-      padding-top: 10px;
-    }
+    .panel-3-row:hover { background: rgba(249,168,37,0.04); }
+    .panels.expanded-3 .panel-3-row { cursor: default; }
+    .panels.expanded-3 .panel-3-row:hover { background: transparent; }
+    .panel-3-row .panel-3 { padding-top: 10px; }
     .panel-divider { background: var(--black); width: 5px; transition: opacity 0.4s ease; }
     .panel {
       padding: 52px 56px 52px 52px;
@@ -277,49 +286,63 @@
     .exp-intro strong { font-style: normal; font-weight: 400; color: var(--black); }
     .exp-body { font-size: 13px; line-height: 1.95; color: #666; font-weight: 300; }
 
-    /* ── Panel 1 expanded: new content styles ── */
-    .p1-section {
+    /* ─────────────────────────────────────────────────────────────
+       v1.47 — Panel 1 product sections, redesigned to match P3
+       Uses: serif section titles · border-left accents · prose layout
+       Replaces: .p1-cards grid · coloured card top-borders
+    ───────────────────────────────────────────────────────────── */
+
+    .p1-product {
       border-top: var(--border);
-      padding-top: 32px;
-      margin-top: 48px;
+      padding-top: 36px;
+      margin-top: 56px;
+      max-width: 860px;
     }
-    .p1-section:first-child { margin-top: 0; border-top: none; padding-top: 0; }
-    .p1-section-title {
+
+    /* Product headline block — mirrors P3 h2 style */
+    .p1-product-header {
+      margin-bottom: 48px;
+    }
+    .p1-product-title {
       font-family: var(--font-display);
-      font-size: clamp(20px, 2.4vw, 28px);
+      font-size: clamp(26px, 3.2vw, 36px);
       font-weight: 400; letter-spacing: -0.03em;
-      color: var(--black); line-height: 1.05;
+      color: var(--black); line-height: 1;
       text-transform: lowercase; margin-bottom: 6px;
     }
-    .p1-section-sub {
+    .p1-product-sub {
       font-size: 9px; letter-spacing: 0.3em;
-      text-transform: uppercase; color: #aaa; font-weight: 300; margin-bottom: 20px;
+      text-transform: uppercase; color: #aaa; font-weight: 300;
     }
-    .p1-lead {
-      font-size: 14px; line-height: 1.85;
-      color: #555; font-weight: 300; font-style: italic; margin-bottom: 10px;
-      max-width: 640px;
+    .p1-product-lead {
+      font-size: 15px; line-height: 1.85;
+      color: #555; font-weight: 300;
+      max-width: 680px; margin-top: 20px; margin-bottom: 0;
     }
-    .p1-desc {
-      font-size: 13px; line-height: 1.95; color: #666; font-weight: 300;
-      max-width: 640px; margin-bottom: 24px;
+
+    /* Feature blocks — mirrors P3 border-left accent blocks */
+    .p1-features { margin-bottom: 48px; }
+    .p1-feature {
+      padding-left: 24px;
+      margin-bottom: 24px;
     }
-    .p1-cards {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 0; margin-bottom: 32px; border-top: var(--border);
+    .p1-feature:last-child { margin-bottom: 0; }
+    .p1-feature-label {
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--black);
+      font-weight: 400; margin-bottom: 8px;
     }
-    .p1-card {
-      border-right: var(--border); border-bottom: var(--border);
-      padding: 20px 22px;
+    .p1-feature-text {
+      font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;
     }
-    .p1-card:last-child { border-right: none; }
-    .p1-card h4 {
-      font-size: 11px; font-weight: 700; color: var(--black);
-      letter-spacing: 0.01em; margin-bottom: 8px;
-    }
-    .p1-card p {
-      font-size: 12px; line-height: 1.7; color: #666; font-weight: 300;
-    }
+
+    /* Blue accent for ServiceFlow */
+    .p1-product.service .p1-feature { border-left: 2px solid var(--blue); }
+
+    /* Red accent for FlowSales */
+    .p1-product.sales .p1-feature { border-left: 2px solid var(--red); }
+
+    /* Implementation steps — retained, slightly tightened */
     .p1-steps-label {
       font-size: 8px; letter-spacing: 0.3em;
       text-transform: uppercase; color: #aaa; font-weight: 300; margin-bottom: 12px;
@@ -331,18 +354,18 @@
     }
     .p1-step:hover { background: rgba(21,101,192,0.04); }
     .p1-step-num {
-      background: var(--black); color: var(--white);
+      color: var(--white);
       font-family: var(--font-display); font-size: 24px;
       font-weight: 400; display: flex; align-items: center;
       justify-content: center; letter-spacing: -0.02em; min-height: 72px;
     }
+    /* Step number colour follows product accent */
+    .p1-product.service .p1-step-num { background: var(--blue); }
+    .p1-product.sales   .p1-step-num { background: var(--red); }
+
     .p1-step-body { padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; }
     .p1-step-title { font-size: 12px; font-weight: 700; color: var(--black); letter-spacing: 0.01em; margin-bottom: 4px; }
     .p1-step-desc { font-size: 12px; line-height: 1.6; color: #666; font-weight: 300; }
-
-    /* alternate section: blue accent for FlowSales */
-    .p1-section.alt .p1-card { border-top: 3px solid var(--blue); }
-    .p1-section.alt .p1-step-num { background: var(--blue); }
 
     /* Back button */
     .btn-back {
@@ -391,7 +414,6 @@
       transition: opacity 0.35s ease;
     }
     .nav-overlay.open { opacity: 1; pointer-events: auto; }
-
     .nav-overlay-item {
       font-family: var(--font-display);
       font-size: clamp(36px, 6vw, 72px);
@@ -411,6 +433,7 @@
       color: #ccc; font-weight: 300;
       text-transform: uppercase; min-width: 28px;
     }
+
     .site-footer {
       position: relative; z-index: 10; border-top: var(--border-thick);
       padding: 8px 56px 8px 52px;
@@ -434,7 +457,6 @@
     .contact-color-block { position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: var(--red); }
     .contact-divider { background: var(--black); width: 5px; }
     .contact-right { padding: 52px 56px 52px 52px; display: flex; flex-direction: column; }
-
     .contact-eyebrow {
       font-size: 8px; letter-spacing: 0.32em;
       text-transform: uppercase; color: #aaa; font-weight: 300;
@@ -457,7 +479,6 @@
       color: #888; font-weight: 300; font-style: italic; margin-top: 28px;
     }
     .contact-note strong { font-style: normal; font-weight: 400; color: var(--black); }
-
     .contact-form { display: flex; flex-direction: column; gap: 28px; max-width: 600px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .form-group { display: flex; flex-direction: column; gap: 9px; }
@@ -468,9 +489,7 @@
     }
     .form-label .req { color: var(--red); font-size: 11px; line-height: 1; }
     .form-label .opt { color: #ccc; font-style: italic; letter-spacing: 0.1em; }
-
-    .form-input,
-    .form-textarea {
+    .form-input, .form-textarea {
       font-family: var(--font-body); font-size: 14px; font-weight: 300;
       color: var(--black); background: transparent; border: none;
       border-bottom: 2px solid #ddd; padding: 10px 0; outline: none;
@@ -479,7 +498,6 @@
     .form-input::placeholder, .form-textarea::placeholder { color: #ccc; }
     .form-input:focus, .form-textarea:focus { border-bottom-color: var(--black); }
     .form-textarea { resize: vertical; min-height: 110px; line-height: 1.75; }
-
     .subject-hints { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     .subject-hint {
       font-size: 9px; letter-spacing: 0.12em; color: #bbb;
@@ -490,7 +508,6 @@
     .subject-hint:hover, .subject-hint.active {
       border-color: var(--black); color: var(--white); background: var(--black);
     }
-
     .form-submit {
       display: inline-flex; align-items: center; gap: 16px;
       margin-top: 8px; padding: 16px 32px;
@@ -500,7 +517,6 @@
       align-self: flex-start; transition: background 0.25s, border-color 0.25s;
     }
     .form-submit:hover { background: var(--blue); border-color: var(--blue); }
-
     .form-success {
       display: none; border-left: 10px solid var(--green);
       padding: 24px 28px; background: rgba(46,125,50,0.04);
@@ -521,7 +537,6 @@
     .impressum-color-block { position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: var(--blue); }
     .impressum-divider { background: var(--black); width: 5px; }
     .impressum-right { padding: 52px 56px 52px 52px; display: flex; flex-direction: column; gap: 48px; max-width: 680px; }
-
     .impressum-eyebrow {
       font-size: 8px; letter-spacing: 0.32em;
       text-transform: uppercase; color: #aaa; font-weight: 300;
@@ -543,7 +558,6 @@
       font-size: 13px; line-height: 1.85;
       color: #888; font-weight: 300; font-style: italic; margin-top: 28px;
     }
-
     .imp-section-title {
       font-size: 8px; letter-spacing: 0.32em;
       text-transform: uppercase; color: #aaa; font-weight: 300;
@@ -555,16 +569,11 @@
       background: var(--black); flex-shrink: 0;
     }
     .imp-section { border-top: var(--border); padding-top: 24px; }
-    .imp-body {
-      font-size: 13px; line-height: 1.95; color: #666; font-weight: 300;
-    }
+    .imp-body { font-size: 13px; line-height: 1.95; color: #666; font-weight: 300; }
     .imp-body strong { font-weight: 400; color: var(--black); }
-    .imp-address {
-      font-size: 14px; line-height: 2; color: var(--black);
-      font-weight: 300; font-style: normal;
-    }
+    .imp-address { font-size: 14px; line-height: 2; color: var(--black); font-weight: 300; font-style: normal; }
 
-    /* Panel 3 list */
+    /* Panel 3 */
     .p3-lead {
       font-size: 14px; line-height: 1.8; color: #888;
       font-weight: 300; font-style: italic;
@@ -576,17 +585,9 @@
       display: grid; grid-template-columns: 52px 1fr;
       border-bottom: 2px solid var(--black); padding: 22px 0;
     }
-    .p3-list-num {
-      font-family: var(--font-display); font-size: 18px;
-      color: #ccc; font-weight: 400; padding-top: 2px;
-    }
-    .p3-list-title {
-      font-size: 13px; font-weight: 400; color: var(--black);
-      margin-bottom: 8px; letter-spacing: -0.01em;
-    }
-    .p3-list-text {
-      font-size: 13px; line-height: 1.85; color: #666; font-weight: 300;
-    }
+    .p3-list-num { font-family: var(--font-display); font-size: 18px; color: #ccc; font-weight: 400; padding-top: 2px; }
+    .p3-list-title { font-size: 13px; font-weight: 400; color: var(--black); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .p3-list-text { font-size: 13px; line-height: 1.85; color: #666; font-weight: 300; }
     .panel-3 { padding-top: 0 !important; padding-bottom: 0 !important; }
     .p3-collapsed { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 48px; }
     .panels.expanded-3 .p3-collapsed { display: none; }
@@ -610,8 +611,7 @@
       .panels.expanded-3 .panel-1, .panels.expanded-3 .panel-2 { display: none; }
       .panels.expanded-1 .panel-divider, .panels.expanded-2 .panel-divider, .panels.expanded-3 .panel-divider { display: none; }
       .exp-grid { grid-template-columns: 1fr; gap: 28px; }
-      .p1-cards { grid-template-columns: 1fr; }
-      .p1-card { border-right: none; }
+      .p1-product { max-width: 100%; }
       .site-footer { padding: 8px 28px; margin-bottom: 0; }
       .contact-main { grid-template-columns: 1fr; }
       .contact-divider { display: none; }
@@ -677,7 +677,8 @@
         </div>
 
         <div class="expanded-inner">
-          <!-- Hero section -->
+
+          <!-- Hero -->
           <div class="exp-grid">
             <div>
               <div class="exp-title">Process &amp;<br>Intelligence</div>
@@ -692,28 +693,32 @@
             </div>
           </div>
 
-          <!-- ServiceFlow -->
-          <div class="p1-section" style="margin-top: 52px;">
-            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:6px;">
-              <div class="p1-section-title">Pumpolino ServiceFlow</div>
-              <div class="p1-section-sub">Software · Service · Automation</div>
+          <!-- ── v1.47: ServiceFlow ── -->
+          <div class="p1-product service">
+            <div class="p1-product-header">
+              <div class="p1-product-title">Pumpolino ServiceFlow</div>
+              <div class="p1-product-sub">Software · Service · Automation</div>
+              <p class="p1-product-lead">
+                Moving from reactive service to controlled operations.
+                ServiceFlow transforms efficiency into structure, bringing service history, scheduling, and resource allocation into a single, transparent system.
+              </p>
             </div>
-            <p class="p1-lead">Transforming efficiency into structure.</p>
-            <p class="p1-desc">Moving from reactive service to controlled operations.</p>
-            <div class="p1-cards">
-              <div class="p1-card">
-                <h4>Central Data Management</h4>
-                <p>All service history and product customisations in one transparent system.</p>
+
+            <div class="p1-features">
+              <div class="p1-feature">
+                <div class="p1-feature-label">Central Data Management</div>
+                <p class="p1-feature-text">All service history and product customisations are unified in one place. Knowledge that was scattered across teams and documents becomes a single, reliable source of truth: accessible and consistent over time.</p>
               </div>
-              <div class="p1-card">
-                <h4>Automation</h4>
-                <p>Proactive notifications for upcoming service intervals.</p>
+              <div class="p1-feature">
+                <div class="p1-feature-label">Automation</div>
+                <p class="p1-feature-text">Well-designed systems do not react, they anticipate. Service intervals are tracked automatically and technicians are notified before issues arise, shifting the operating mode from reactive to proactive.</p>
               </div>
-              <div class="p1-card">
-                <h4>Resource Planning</h4>
-                <p>Optimised allocation of technicians and spare parts.</p>
+              <div class="p1-feature">
+                <div class="p1-feature-label">Resource Planning</div>
+                <p class="p1-feature-text">Specialists, spare parts, and logistics are coordinated with accuracy. The right expertise is available exactly when needed, reducing operational friction and keeping service delivery consistent.</p>
               </div>
             </div>
+
             <div class="p1-steps-label">Implementation</div>
             <div class="p1-steps">
               <div class="p1-step">
@@ -740,28 +745,32 @@
             </div>
           </div>
 
-          <!-- FlowSales -->
-          <div class="p1-section alt">
-            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:6px;">
-              <div class="p1-section-title">Pumpolino FlowSales</div>
-              <div class="p1-section-sub">Software · Sales · Intelligence</div>
+          <!-- ── v1.47: FlowSales ── -->
+          <div class="p1-product sales">
+            <div class="p1-product-header">
+              <div class="p1-product-title">Pumpolino FlowSales</div>
+              <div class="p1-product-sub">Software · Sales · Intelligence</div>
+              <p class="p1-product-lead">
+                Structuring decisions before they are made.
+                FlowSales turns experience into reproducible outcomes. It transforms project knowledge into structured sales intelligence that supports every stage of the sales process.
+              </p>
             </div>
-            <p class="p1-lead">Structuring decisions before they are made.</p>
-            <p class="p1-desc">Turning experience into reproducible outcomes. Transforming project knowledge into structured sales intelligence.</p>
-            <div class="p1-cards">
-              <div class="p1-card">
-                <h4>Digital Twin</h4>
-                <p>Centralised project data including documents, certifications and sensor data.</p>
+
+            <div class="p1-features">
+              <div class="p1-feature">
+                <div class="p1-feature-label">Digital Twin</div>
+                <p class="p1-feature-text">Every project is captured in full: documents, certifications, configurations, and sensor data are centralised into a structured record. This makes institutional knowledge searchable, comparable, and available at the moment it is needed.</p>
               </div>
-              <div class="p1-card">
-                <h4>Sales Enablement</h4>
-                <p>Higher conversion through relevant references and comparable projects.</p>
+              <div class="p1-feature">
+                <div class="p1-feature-label">Sales Enablement</div>
+                <p class="p1-feature-text">Relevant references and comparable projects are surfaced at the right moment in the sales process. Conversion improves because proposals are grounded in demonstrated experience rather than general capability.</p>
               </div>
-              <div class="p1-card">
-                <h4>Quotation Support</h4>
-                <p>Semi-automated offers based on existing configurations.</p>
+              <div class="p1-feature">
+                <div class="p1-feature-label">Quotation Support</div>
+                <p class="p1-feature-text">Semi-automated offers are generated from existing configurations and project data. Teams spend less time rebuilding proposals from scratch and more time on the decisions that require genuine expertise.</p>
               </div>
             </div>
+
             <div class="p1-steps-label">Implementation</div>
             <div class="p1-steps">
               <div class="p1-step">
@@ -794,10 +803,9 @@
 
       <div class="panel-divider"></div>
 
-      <!-- Panel 2: Art & Provenance -->
+      <!-- Panel 2: Art & Provenance (unchanged) -->
       <div class="panel panel-2" onclick="expand(2)" role="button" tabindex="0" aria-label="Art and Provenance">
         <div class="panel-bar red"></div>
-
         <div class="collapsed">
           <div class="panel-number">02</div>
           <div class="panel-title">Art &amp;<br>Provenance</div>
@@ -806,11 +814,10 @@
           <div class="spacer"></div>
           <div class="panel-cta">Enter →</div>
         </div>
-
         <div class="expanded-inner">
           <div class="exp-grid">
             <div>
-                <div class="exp-title">Art &amp;<br>Provenance</div>
+              <div class="exp-title">Art &amp;<br>Provenance</div>
               <div class="exp-sub">Museums · Collections · Exhibition</div>
             </div>
             <div class="exp-right">
@@ -825,6 +832,7 @@
         </div>
       </div>
 
+      <!-- Panel 3: Industrial Pumps & Art (unchanged) -->
       <div class="panel-3-row" onclick="expand(3)" role="button" tabindex="0" aria-label="Industrial Pumps and Art">
         <div class="panel panel-3">
           <div class="panel-bar" style="background: var(--yellow);"></div>
