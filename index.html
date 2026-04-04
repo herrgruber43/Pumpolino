@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumpolino v1.40</title>
+  <title>Pumpolino v1.45</title>
   <meta name="description" content="Precision, applied." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,7 +105,9 @@
       color: var(--black); line-height: 1; text-transform: lowercase;
     }
     .logo-word em { font-style: italic; color: var(--red); }
-    .logo-domain { display: none; }
+    .logo-symbol { display: flex; flex-shrink: 0; }
+    .logo-symbol img { width: 36px; height: 36px; object-fit: contain; }
+    .logo-inner { display: flex; align-items: center; gap: 14px; }
 
     .header-tagline-cell {
       border-top: var(--border);
@@ -119,8 +121,8 @@
     .header-tagline {
       font-family: var(--font-display);
       font-size: clamp(17px, 2.2vw, 26px);
-      font-weight: 400; letter-spacing: -0.02em;
-      color: #aaa; line-height: 1.3;
+      font-weight: 300; letter-spacing: -0.02em;
+      color: #bbb; line-height: 1.3;
       text-transform: lowercase; font-style: italic;
       text-align: center;
     }
@@ -380,7 +382,61 @@
     .panels.expanded-2 .panel-2 .btn-back,
     .panels.expanded-3 .panel-3 .btn-back { display: block; }
 
-    /* ── Footer ── */
+    /* ── Hamburger menu ── */
+    .hamburger {
+      position: fixed; top: 20px; left: 20px;
+      background: transparent; z-index: 300;
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: center;
+      gap: 5px; cursor: pointer; border: none;
+      padding: 6px; font-family: var(--font-body);
+      transition: opacity 0.2s;
+    }
+    .hamburger:hover { opacity: 0.5; }
+    .hamburger span {
+      display: block; height: 1.5px;
+      background: var(--black);
+      transition: transform 0.3s, opacity 0.3s, width 0.3s;
+    }
+    .hamburger span:nth-child(1) { width: 28px; }
+    .hamburger span:nth-child(2) { width: 18px; }
+    .hamburger span:nth-child(3) { width: 24px; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); width: 24px; }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 24px; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--white); z-index: 250;
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 0 64px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .nav-overlay-item {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 400; letter-spacing: -0.03em;
+      color: var(--black); text-transform: lowercase;
+      line-height: 1; cursor: pointer;
+      border-bottom: 2px solid #e0e0e0;
+      padding: 28px 0;
+      transition: color 0.2s;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .nav-overlay-item:first-child { border-top: 2px solid #e0e0e0; }
+    .nav-overlay-item:hover { color: #aaa; }
+    .nav-overlay-num {
+      font-family: var(--font-body);
+      font-size: 10px; letter-spacing: 0.3em;
+      color: #ccc; font-weight: 300;
+      text-transform: uppercase; min-width: 28px;
+    }
     .site-footer {
       position: relative; z-index: 10; border-top: var(--border-thick);
       padding: 8px 56px 8px 52px;
@@ -602,8 +658,19 @@
 
   <div class="m-left"></div>
   <div class="m-top"></div>
-  <div class="m-corner-1" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
-  <div class="m-corner-2" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
+  <div class="m-corner-1" onclick="this.classList.add('hidden')"></div>
+  <div class="m-corner-2" onclick="this.classList.add('hidden')"></div>
+
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-overlay" id="nav-overlay">
+    <div class="nav-overlay-item" onclick="menuGoPanel(1)">Process &amp; Intelligence</div>
+    <div class="nav-overlay-item" onclick="menuGoPanel(2)">Art &amp; Provenance</div>
+    <div class="nav-overlay-item" onclick="menuGoPanel(3)">Industrial Pumps &amp; Art</div>
+    <div class="nav-overlay-item" onclick="menuGoContact()">Contact</div>
+  </div>
 
   <!-- HOME PAGE -->
   <div class="page active" id="page-home">
@@ -613,7 +680,6 @@
       <div class="header-center-cell">
         <a class="logo" onclick="goHome()" tabindex="0">
           <div class="logo-word">pump<em>o</em>lino</div>
-          <div class="logo-domain">pumpolino.com</div>
         </a>
         <div class="header-tagline-cell">
           <div class="header-tagline">Precision, applied.</div>
@@ -855,7 +921,7 @@
     </footer>
     <div class="footer-bottom-corners">
       <div class="m-corner-black"></div>
-      <div class="m-corner-3" onclick="this.classList.add('hidden')"><span class="m-corner-label">close</span></div>
+      <div class="m-corner-3" onclick="this.classList.add('hidden')"></div>
     </div>
   </div>
 
@@ -866,7 +932,6 @@
       <div class="header-center-cell">
         <a class="logo" onclick="goHome()" style="cursor:pointer" tabindex="0">
           <div class="logo-word">pump<em>o</em>lino</div>
-          <div class="logo-domain">pumpolino.com</div>
         </a>
         <div class="header-tagline-cell">
           <div class="header-tagline">Precision, applied.</div>
@@ -943,7 +1008,6 @@
       <div class="header-center-cell">
         <a class="logo" onclick="goHome()" style="cursor:pointer" tabindex="0">
           <div class="logo-word">pump<em>o</em>lino</div>
-          <div class="logo-domain">pumpolino.com</div>
         </a>
         <div class="header-tagline-cell">
           <div class="header-tagline">Precision, applied.</div>
@@ -997,6 +1061,27 @@
   </div>
 
   <script>
+    function toggleMenu() {
+      var h = document.getElementById('hamburger');
+      var o = document.getElementById('nav-overlay');
+      h.classList.toggle('open');
+      o.classList.toggle('open');
+    }
+    function closeMenu() {
+      var h = document.getElementById('hamburger');
+      h.classList.remove('open');
+      document.getElementById('nav-overlay').classList.remove('open');
+    }
+    function menuGoPanel(n) {
+      closeMenu();
+      showPage('page-home');
+      setTimeout(function(){ expand(n); }, 50);
+    }
+    function menuGoContact() {
+      closeMenu();
+      goContact();
+    }
+
     var current = 0;
     var refOpen = false;
 
