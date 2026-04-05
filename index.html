@@ -3,12 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pumpolino v1.48</title>
+  <title>Pumpolino v1.51</title>
   <meta name="description" content="Precision, applied." />
   <!--
   ╔══════════════════════════════════════════════════════════════════╗
   ║  PUMPOLINO — CHANGELOG                                          ║
   ╠══════════════════════════════════════════════════════════════════╣
+  ║  v1.51  2026-04-05                                              ║
+  ║    - Panel 1: ServiceFlow & FlowSales aufklappbar gemacht       ║
+  ║      Accordion via toggleProduct(), max-height transition       ║
+  ║      + / × als Indikator                                        ║
+  ║                                                                 ║
+  ║  v1.50  2026-04-05                                              ║
+  ║    - Panel 1 & 2: Intro-Text neu unterhalb des Titels           ║
+  ║      .exp-grid von 2-Spalten-Grid auf flex column umgestellt    ║
+  ║                                                                 ║
+  ║  v1.49  2026-04-04                                              ║
+  ║    - --white geändert von #ffffff auf #fafaf8 (Warmweiss)       ║
+  ║                                                                 ║
   ║  v1.48  2026-04-04                                              ║
   ║    - Panel 1: all em-dashes removed from visible text           ║
   ║      replaced with new sentences or commas                      ║
@@ -31,7 +43,7 @@
   <style>
     :root {
       --black: #0a0a0a;
-      --white: #ffffff;
+      --white: #fafaf8;
       --red: #D32F2F;
       --blue: #1565C0;
       --yellow: #F9A825;
@@ -258,8 +270,9 @@
     .panels.expanded-3 .panel-3 .expanded-inner { display: flex; }
 
     .exp-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: start; flex: 1; margin-top: 22px;
+      display: flex; flex-direction: column;
+      gap: 28px; flex: 1; margin-top: 22px;
+      max-width: 680px;
     }
     .exp-title {
       font-family: var(--font-display);
@@ -273,18 +286,47 @@
       text-transform: uppercase; color: #aaa; font-weight: 300;
     }
     .exp-right {
-      padding-top: 4px; opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+      padding-top: 0; opacity: 0;
+      transition: opacity 0.5s ease 0.3s;
     }
     .panels.expanded-1 .panel-1 .exp-right,
     .panels.expanded-2 .panel-2 .exp-right,
-    .panels.expanded-3 .panel-3 .exp-right { opacity: 1; transform: translateY(0); }
+    .panels.expanded-3 .panel-3 .exp-right { opacity: 1; }
     .exp-intro {
       font-size: 14px; line-height: 1.75;
       color: #888; font-weight: 300; font-style: italic; margin-bottom: 20px;
     }
     .exp-intro strong { font-style: normal; font-weight: 400; color: var(--black); }
     .exp-body { font-size: 13px; line-height: 1.95; color: #666; font-weight: 300; }
+
+    /* ─────────────────────────────────────────────────────────────
+       v1.51 — aufklappbare Produkte in Panel 1
+    ───────────────────────────────────────────────────────────── */
+    .p1-product-trigger {
+      display: flex; align-items: baseline; justify-content: space-between;
+      cursor: pointer; padding-bottom: 20px;
+      border-bottom: 2px solid var(--black);
+      transition: opacity 0.2s;
+      user-select: none;
+    }
+    .p1-product-trigger:hover { opacity: 0.6; }
+    .p1-product-trigger-left { display: flex; flex-direction: column; gap: 5px; }
+    .p1-product-trigger-arrow {
+      font-family: var(--font-body); font-size: 13px;
+      color: #aaa; font-weight: 300;
+      transition: transform 0.35s cubic-bezier(0.77,0,0.18,1), color 0.2s;
+      flex-shrink: 0;
+    }
+    .p1-product.open .p1-product-trigger-arrow {
+      transform: rotate(45deg); color: var(--black);
+    }
+    .p1-product-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.55s cubic-bezier(0.77,0,0.18,1);
+    }
+    .p1-product.open .p1-product-body { max-height: 1400px; }
+    .p1-product-body-inner { padding-top: 32px; }
 
     /* ─────────────────────────────────────────────────────────────
        v1.47 — Panel 1 product sections, redesigned to match P3
@@ -693,105 +735,121 @@
             </div>
           </div>
 
-          <!-- ── v1.47: ServiceFlow ── -->
-          <div class="p1-product service">
-            <div class="p1-product-header">
-              <div class="p1-product-title">Pumpolino ServiceFlow</div>
-              <div class="p1-product-sub">Software · Service · Automation</div>
-              <p class="p1-product-lead">
-                Moving from reactive service to controlled operations.
-                ServiceFlow transforms efficiency into structure, bringing service history, scheduling, and resource allocation into a single, transparent system.
-              </p>
+          <!-- ── v1.51: ServiceFlow aufklappbar ── -->
+          <div class="p1-product service" id="product-service">
+            <div class="p1-product-trigger" onclick="toggleProduct('product-service')">
+              <div class="p1-product-trigger-left">
+                <div class="p1-product-title">Pumpolino ServiceFlow</div>
+                <div class="p1-product-sub">Software · Service · Automation</div>
+              </div>
+              <div class="p1-product-trigger-arrow">+</div>
             </div>
 
-            <div class="p1-features">
-              <div class="p1-feature">
-                <div class="p1-feature-label">Central Data Management</div>
-                <p class="p1-feature-text">All service history and product customisations are unified in one place. Knowledge that was scattered across teams and documents becomes a single, reliable source of truth: accessible and consistent over time.</p>
-              </div>
-              <div class="p1-feature">
-                <div class="p1-feature-label">Automation</div>
-                <p class="p1-feature-text">Well-designed systems do not react, they anticipate. Service intervals are tracked automatically and technicians are notified before issues arise, shifting the operating mode from reactive to proactive.</p>
-              </div>
-              <div class="p1-feature">
-                <div class="p1-feature-label">Resource Planning</div>
-                <p class="p1-feature-text">Specialists, spare parts, and logistics are coordinated with accuracy. The right expertise is available exactly when needed, reducing operational friction and keeping service delivery consistent.</p>
-              </div>
-            </div>
+            <div class="p1-product-body">
+              <div class="p1-product-body-inner">
+                <p class="p1-product-lead">
+                  Moving from reactive service to controlled operations.
+                  ServiceFlow transforms efficiency into structure, bringing service history, scheduling, and resource allocation into a single, transparent system.
+                </p>
 
-            <div class="p1-steps-label">Implementation</div>
-            <div class="p1-steps">
-              <div class="p1-step">
-                <div class="p1-step-num">1</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">Analysis</div>
-                  <div class="p1-step-desc">Definition of processes and identification of tailored features.</div>
+                <div class="p1-features">
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Central Data Management</div>
+                    <p class="p1-feature-text">All service history and product customisations are unified in one place. Knowledge that was scattered across teams and documents becomes a single, reliable source of truth: accessible and consistent over time.</p>
+                  </div>
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Automation</div>
+                    <p class="p1-feature-text">Well-designed systems do not react, they anticipate. Service intervals are tracked automatically and technicians are notified before issues arise, shifting the operating mode from reactive to proactive.</p>
+                  </div>
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Resource Planning</div>
+                    <p class="p1-feature-text">Specialists, spare parts, and logistics are coordinated with accuracy. The right expertise is available exactly when needed, reducing operational friction and keeping service delivery consistent.</p>
+                  </div>
                 </div>
-              </div>
-              <div class="p1-step">
-                <div class="p1-step-num">2</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">Configuration &amp; Migration</div>
-                  <div class="p1-step-desc">Data integration into existing workflows.</div>
-                </div>
-              </div>
-              <div class="p1-step">
-                <div class="p1-step-num">3</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">Rollout</div>
-                  <div class="p1-step-desc">Phased implementation with user training.</div>
+
+                <div class="p1-steps-label">Implementation</div>
+                <div class="p1-steps">
+                  <div class="p1-step">
+                    <div class="p1-step-num">1</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">Analysis</div>
+                      <div class="p1-step-desc">Definition of processes and identification of tailored features.</div>
+                    </div>
+                  </div>
+                  <div class="p1-step">
+                    <div class="p1-step-num">2</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">Configuration &amp; Migration</div>
+                      <div class="p1-step-desc">Data integration into existing workflows.</div>
+                    </div>
+                  </div>
+                  <div class="p1-step">
+                    <div class="p1-step-num">3</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">Rollout</div>
+                      <div class="p1-step-desc">Phased implementation with user training.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- ── v1.47: FlowSales ── -->
-          <div class="p1-product sales">
-            <div class="p1-product-header">
-              <div class="p1-product-title">Pumpolino FlowSales</div>
-              <div class="p1-product-sub">Software · Sales · Intelligence</div>
-              <p class="p1-product-lead">
-                Structuring decisions before they are made.
-                FlowSales turns experience into reproducible outcomes. It transforms project knowledge into structured sales intelligence that supports every stage of the sales process.
-              </p>
+          <!-- ── v1.51: FlowSales aufklappbar ── -->
+          <div class="p1-product sales" id="product-sales">
+            <div class="p1-product-trigger" onclick="toggleProduct('product-sales')">
+              <div class="p1-product-trigger-left">
+                <div class="p1-product-title">Pumpolino FlowSales</div>
+                <div class="p1-product-sub">Software · Sales · Intelligence</div>
+              </div>
+              <div class="p1-product-trigger-arrow">+</div>
             </div>
 
-            <div class="p1-features">
-              <div class="p1-feature">
-                <div class="p1-feature-label">Digital Twin</div>
-                <p class="p1-feature-text">Every project is captured in full: documents, certifications, configurations, and sensor data are centralised into a structured record. This makes institutional knowledge searchable, comparable, and available at the moment it is needed.</p>
-              </div>
-              <div class="p1-feature">
-                <div class="p1-feature-label">Sales Enablement</div>
-                <p class="p1-feature-text">Relevant references and comparable projects are surfaced at the right moment in the sales process. Conversion improves because proposals are grounded in demonstrated experience rather than general capability.</p>
-              </div>
-              <div class="p1-feature">
-                <div class="p1-feature-label">Quotation Support</div>
-                <p class="p1-feature-text">Semi-automated offers are generated from existing configurations and project data. Teams spend less time rebuilding proposals from scratch and more time on the decisions that require genuine expertise.</p>
-              </div>
-            </div>
+            <div class="p1-product-body">
+              <div class="p1-product-body-inner">
+                <p class="p1-product-lead">
+                  Structuring decisions before they are made.
+                  FlowSales turns experience into reproducible outcomes. It transforms project knowledge into structured sales intelligence that supports every stage of the sales process.
+                </p>
 
-            <div class="p1-steps-label">Implementation</div>
-            <div class="p1-steps">
-              <div class="p1-step">
-                <div class="p1-step-num">1</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">Data Structuring</div>
-                  <div class="p1-step-desc">Organisation of relevant project and reference data.</div>
+                <div class="p1-features">
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Digital Twin</div>
+                    <p class="p1-feature-text">Every project is captured in full: documents, certifications, configurations, and sensor data are centralised into a structured record. This makes institutional knowledge searchable, comparable, and available at the moment it is needed.</p>
+                  </div>
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Sales Enablement</div>
+                    <p class="p1-feature-text">Relevant references and comparable projects are surfaced at the right moment in the sales process. Conversion improves because proposals are grounded in demonstrated experience rather than general capability.</p>
+                  </div>
+                  <div class="p1-feature">
+                    <div class="p1-feature-label">Quotation Support</div>
+                    <p class="p1-feature-text">Semi-automated offers are generated from existing configurations and project data. Teams spend less time rebuilding proposals from scratch and more time on the decisions that require genuine expertise.</p>
+                  </div>
                 </div>
-              </div>
-              <div class="p1-step">
-                <div class="p1-step-num">2</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">System Configuration</div>
-                  <div class="p1-step-desc">Mapping sales processes and integrating data sources.</div>
-                </div>
-              </div>
-              <div class="p1-step">
-                <div class="p1-step-num">3</div>
-                <div class="p1-step-body">
-                  <div class="p1-step-title">Deployment</div>
-                  <div class="p1-step-desc">Gradual rollout with optimisation and user enablement.</div>
+
+                <div class="p1-steps-label">Implementation</div>
+                <div class="p1-steps">
+                  <div class="p1-step">
+                    <div class="p1-step-num">1</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">Data Structuring</div>
+                      <div class="p1-step-desc">Organisation of relevant project and reference data.</div>
+                    </div>
+                  </div>
+                  <div class="p1-step">
+                    <div class="p1-step-num">2</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">System Configuration</div>
+                      <div class="p1-step-desc">Mapping sales processes and integrating data sources.</div>
+                    </div>
+                  </div>
+                  <div class="p1-step">
+                    <div class="p1-step-num">3</div>
+                    <div class="p1-step-body">
+                      <div class="p1-step-title">Deployment</div>
+                      <div class="p1-step-desc">Gradual rollout with optimisation and user enablement.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1054,6 +1112,11 @@
   </div>
 
   <script>
+    function toggleProduct(id) {
+      var el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+
     function toggleMenu() {
       var h = document.getElementById('hamburger');
       var o = document.getElementById('nav-overlay');
