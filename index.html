@@ -7,34 +7,39 @@
   <meta name="description" content="Precision, applied." />
   <!--
   ╔══════════════════════════════════════════════════════════════════╗
-  ║  PUMPOLINO — CHANGELOG                                          ║
+  ║  PUMPOLINO — CHANGELOG                                           ║
   ╠══════════════════════════════════════════════════════════════════╣
-  ║  v1.51  2026-04-05                                              ║
-  ║    - Panel 1: ServiceFlow & FlowSales aufklappbar gemacht       ║
-  ║      Accordion via toggleProduct(), max-height transition       ║
-  ║      + / × als Indikator                                        ║
-  ║                                                                 ║
-  ║  v1.50  2026-04-05                                              ║
-  ║    - Panel 1 & 2: Intro-Text neu unterhalb des Titels           ║
-  ║      .exp-grid von 2-Spalten-Grid auf flex column umgestellt    ║
-  ║                                                                 ║
-  ║  v1.49  2026-04-04                                              ║
-  ║    - --white geändert von #ffffff auf #fafaf8 (Warmweiss)       ║
-  ║                                                                 ║
-  ║  v1.48  2026-04-04                                              ║
-  ║    - Panel 1: all em-dashes removed from visible text           ║
-  ║      replaced with new sentences or commas                      ║
-  ║                                                                 ║
-  ║  v1.47  2026-04-04                                              ║
-  ║    - Panel 1: ServiceFlow & FlowSales redesigned to match       ║
+  ║  v1.52  2026-04-05                                               ║
+  ║    - Alle sichtbaren Texte in CONTENT-Objekt ausgelagert         ║
+  ║      HTML enthält nur noch Struktur, Texte nur noch im Script    ║
+  ║      Zum Bearbeiten: nur den CONTENT-Block am Ende anpassen      ║
+  ║                                                                  ║
+  ║  v1.51  2026-04-05                                               ║
+  ║    - Panel 1: ServiceFlow & FlowSales aufklappbar gemacht        ║
+  ║      Accordion via toggleProduct(), max-height transition        ║
+  ║      + / × als Indikator                                         ║
+  ║                                                                  ║
+  ║  v1.50  2026-04-05                                               ║
+  ║    - Panel 1 & 2: Intro-Text neu unterhalb des Titels            ║
+  ║      .exp-grid von 2-Spalten-Grid auf flex column umgestellt     ║
+  ║                                                                  ║
+  ║  v1.49  2026-04-04                                               ║
+  ║    - --white geändert von #ffffff auf #fafaf8 (Warmweiss)        ║
+  ║                                                                  ║
+  ║  v1.48  2026-04-04                                               ║
+  ║    - Panel 1: all em-dashes removed from visible text            ║
+  ║      replaced with new sentences or commas                       ║
+  ║                                                                  ║
+  ║  v1.47  2026-04-04                                               ║
+  ║    - Panel 1: ServiceFlow & FlowSales redesigned to match        ║
   ║      Panel 3 layout language (serif section titles, border-left  ║
-  ║      accents, prose-heavy description blocks, no card grid)     ║
-  ║    - Removed .p1-cards grid; replaced with .p1-feature blocks   ║
-  ║    - .p1-steps retained but visually tightened                  ║
-  ║    - No changes to Panel 2, Panel 3, Contact, Impressum         ║
-  ║                                                                 ║
-  ║  v1.46  (baseline)                                              ║
-  ║    - Initial release                                            ║
+  ║      accents, prose-heavy description blocks, no card grid)      ║
+  ║    - Removed .p1-cards grid; replaced with .p1-feature blocks    ║
+  ║    - .p1-steps retained but visually tightened                   ║
+  ║    - No changes to Panel 2, Panel 3, Contact, Impressum          ║
+  ║                                                                  ║
+  ║  v1.46  (baseline)                                               ║
+  ║    - Initial release                                             ║
   ╚══════════════════════════════════════════════════════════════════╝
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -679,10 +684,10 @@
   </button>
 
   <div class="nav-overlay" id="nav-overlay">
-    <div class="nav-overlay-item" onclick="menuGoPanel(1)">Process &amp; Intelligence</div>
-    <div class="nav-overlay-item" onclick="menuGoPanel(2)">Art &amp; Provenance</div>
-    <div class="nav-overlay-item" onclick="menuGoPanel(3)">Industrial Pumps &amp; Art</div>
-    <div class="nav-overlay-item" onclick="menuGoContact()">Contact</div>
+    <div class="nav-overlay-item" onclick="menuGoPanel(1)" id="nav-p1"></div>
+    <div class="nav-overlay-item" onclick="menuGoPanel(2)" id="nav-p2"></div>
+    <div class="nav-overlay-item" onclick="menuGoPanel(3)" id="nav-p3"></div>
+    <div class="nav-overlay-item" onclick="menuGoContact()" id="nav-contact"></div>
   </div>
 
   <!-- HOME PAGE -->
@@ -695,162 +700,73 @@
           <div class="logo-word">pump<em>o</em>lino</div>
         </a>
         <div class="header-tagline-cell">
-          <div class="header-tagline">Precision, applied.</div>
+          <div class="header-tagline" id="site-tagline"></div>
         </div>
       </div>
       <div class="header-nav-cell">
-        <a class="nav-link" onclick="goContact()">Contact</a>
+        <a class="nav-link" onclick="goContact()" id="header-nav-contact"></a>
       </div>
     </header>
 
     <main class="panels" id="panels">
 
-      <!-- Panel 1: Process & Intelligence -->
+      <!-- Panel 1 -->
       <div class="panel panel-1" onclick="expand(1)" role="button" tabindex="0" aria-label="Process and Intelligence">
         <div class="panel-bar blue"></div>
-
         <div class="collapsed">
           <div class="panel-number">01</div>
-          <div class="panel-title">Process &amp;<br>Intelligence</div>
-          <div class="panel-sub">Consulting · Data · AI</div>
-          <div class="panel-body">We work where <strong>complexity asks for calm.</strong></div>
+          <div class="panel-title" id="p1-title-collapsed"></div>
+          <div class="panel-sub" id="p1-sub-collapsed"></div>
+          <div class="panel-body" id="p1-teaser-collapsed"></div>
           <div class="spacer"></div>
-          <div class="panel-cta">Enter →</div>
+          <div class="panel-cta" id="p1-cta-collapsed"></div>
         </div>
-
         <div class="expanded-inner">
-
-          <!-- Hero -->
           <div class="exp-grid">
             <div>
-              <div class="exp-title">Process &amp;<br>Intelligence</div>
-              <div class="exp-sub">Consulting · Data · AI</div>
+              <div class="exp-title" id="p1-title-expanded"></div>
+              <div class="exp-sub" id="p1-sub-expanded"></div>
             </div>
             <div class="exp-right">
-              <div class="exp-intro">We work where <strong>complexity asks for calm.</strong></div>
-              <div class="exp-body">
-                Systems that move: water · information · decisions<br><br>
-                Pumpolino combines deep technical expertise in industrial processes with modern data architecture and applied intelligence.
-              </div>
+              <div class="exp-intro" id="p1-intro-expanded"></div>
+              <div class="exp-body" id="p1-body-expanded"></div>
             </div>
           </div>
 
-          <!-- ── v1.51: ServiceFlow aufklappbar ── -->
+          <!-- ServiceFlow accordion -->
           <div class="p1-product service" id="product-service">
             <div class="p1-product-trigger" onclick="toggleProduct('product-service')">
               <div class="p1-product-trigger-left">
-                <div class="p1-product-title">Pumpolino ServiceFlow</div>
-                <div class="p1-product-sub">Software · Service · Automation</div>
+                <div class="p1-product-title" id="sf-title"></div>
+                <div class="p1-product-sub" id="sf-sub"></div>
               </div>
               <div class="p1-product-trigger-arrow">+</div>
             </div>
-
             <div class="p1-product-body">
               <div class="p1-product-body-inner">
-                <p class="p1-product-lead">
-                  Moving from reactive service to controlled operations.
-                  ServiceFlow transforms efficiency into structure, bringing service history, scheduling, and resource allocation into a single, transparent system.
-                </p>
-
-                <div class="p1-features">
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Central Data Management</div>
-                    <p class="p1-feature-text">All service history and product customisations are unified in one place. Knowledge that was scattered across teams and documents becomes a single, reliable source of truth: accessible and consistent over time.</p>
-                  </div>
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Automation</div>
-                    <p class="p1-feature-text">Well-designed systems do not react, they anticipate. Service intervals are tracked automatically and technicians are notified before issues arise, shifting the operating mode from reactive to proactive.</p>
-                  </div>
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Resource Planning</div>
-                    <p class="p1-feature-text">Specialists, spare parts, and logistics are coordinated with accuracy. The right expertise is available exactly when needed, reducing operational friction and keeping service delivery consistent.</p>
-                  </div>
-                </div>
-
-                <div class="p1-steps-label">Implementation</div>
-                <div class="p1-steps">
-                  <div class="p1-step">
-                    <div class="p1-step-num">1</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">Analysis</div>
-                      <div class="p1-step-desc">Definition of processes and identification of tailored features.</div>
-                    </div>
-                  </div>
-                  <div class="p1-step">
-                    <div class="p1-step-num">2</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">Configuration &amp; Migration</div>
-                      <div class="p1-step-desc">Data integration into existing workflows.</div>
-                    </div>
-                  </div>
-                  <div class="p1-step">
-                    <div class="p1-step-num">3</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">Rollout</div>
-                      <div class="p1-step-desc">Phased implementation with user training.</div>
-                    </div>
-                  </div>
-                </div>
+                <p class="p1-product-lead" id="sf-lead"></p>
+                <div class="p1-features" id="sf-features"></div>
+                <div class="p1-steps-label" id="sf-steps-label"></div>
+                <div class="p1-steps" id="sf-steps"></div>
               </div>
             </div>
           </div>
 
-          <!-- ── v1.51: FlowSales aufklappbar ── -->
+          <!-- FlowSales accordion -->
           <div class="p1-product sales" id="product-sales">
             <div class="p1-product-trigger" onclick="toggleProduct('product-sales')">
               <div class="p1-product-trigger-left">
-                <div class="p1-product-title">Pumpolino FlowSales</div>
-                <div class="p1-product-sub">Software · Sales · Intelligence</div>
+                <div class="p1-product-title" id="fls-title"></div>
+                <div class="p1-product-sub" id="fls-sub"></div>
               </div>
               <div class="p1-product-trigger-arrow">+</div>
             </div>
-
             <div class="p1-product-body">
               <div class="p1-product-body-inner">
-                <p class="p1-product-lead">
-                  Structuring decisions before they are made.
-                  FlowSales turns experience into reproducible outcomes. It transforms project knowledge into structured sales intelligence that supports every stage of the sales process.
-                </p>
-
-                <div class="p1-features">
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Digital Twin</div>
-                    <p class="p1-feature-text">Every project is captured in full: documents, certifications, configurations, and sensor data are centralised into a structured record. This makes institutional knowledge searchable, comparable, and available at the moment it is needed.</p>
-                  </div>
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Sales Enablement</div>
-                    <p class="p1-feature-text">Relevant references and comparable projects are surfaced at the right moment in the sales process. Conversion improves because proposals are grounded in demonstrated experience rather than general capability.</p>
-                  </div>
-                  <div class="p1-feature">
-                    <div class="p1-feature-label">Quotation Support</div>
-                    <p class="p1-feature-text">Semi-automated offers are generated from existing configurations and project data. Teams spend less time rebuilding proposals from scratch and more time on the decisions that require genuine expertise.</p>
-                  </div>
-                </div>
-
-                <div class="p1-steps-label">Implementation</div>
-                <div class="p1-steps">
-                  <div class="p1-step">
-                    <div class="p1-step-num">1</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">Data Structuring</div>
-                      <div class="p1-step-desc">Organisation of relevant project and reference data.</div>
-                    </div>
-                  </div>
-                  <div class="p1-step">
-                    <div class="p1-step-num">2</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">System Configuration</div>
-                      <div class="p1-step-desc">Mapping sales processes and integrating data sources.</div>
-                    </div>
-                  </div>
-                  <div class="p1-step">
-                    <div class="p1-step-num">3</div>
-                    <div class="p1-step-body">
-                      <div class="p1-step-title">Deployment</div>
-                      <div class="p1-step-desc">Gradual rollout with optimisation and user enablement.</div>
-                    </div>
-                  </div>
-                </div>
+                <p class="p1-product-lead" id="fls-lead"></p>
+                <div class="p1-features" id="fls-features"></div>
+                <div class="p1-steps-label" id="fls-steps-label"></div>
+                <div class="p1-steps" id="fls-steps"></div>
               </div>
             </div>
           </div>
@@ -861,101 +777,48 @@
 
       <div class="panel-divider"></div>
 
-      <!-- Panel 2: Art & Provenance (unchanged) -->
+      <!-- Panel 2 -->
       <div class="panel panel-2" onclick="expand(2)" role="button" tabindex="0" aria-label="Art and Provenance">
         <div class="panel-bar red"></div>
         <div class="collapsed">
           <div class="panel-number">02</div>
-          <div class="panel-title">Art &amp;<br>Provenance</div>
-          <div class="panel-sub">Museums · Collections · Exhibition</div>
-          <div class="panel-body">We work where <strong>meaning asks for discretion.</strong></div>
+          <div class="panel-title" id="p2-title-collapsed"></div>
+          <div class="panel-sub" id="p2-sub-collapsed"></div>
+          <div class="panel-body" id="p2-teaser-collapsed"></div>
           <div class="spacer"></div>
-          <div class="panel-cta">Enter →</div>
+          <div class="panel-cta" id="p2-cta-collapsed"></div>
         </div>
         <div class="expanded-inner">
           <div class="exp-grid">
             <div>
-              <div class="exp-title">Art &amp;<br>Provenance</div>
-              <div class="exp-sub">Museums · Collections · Exhibition</div>
+              <div class="exp-title" id="p2-title-expanded"></div>
+              <div class="exp-sub" id="p2-sub-expanded"></div>
             </div>
             <div class="exp-right">
-              <div class="exp-intro">We work where <strong>meaning asks for discretion.</strong></div>
-              <div class="exp-body">
-                Objects of significance, handled with patience.<br><br>
-                Pumpolino accompanies works of art through the careful architecture of acquisition, placement, and exhibition, in dialogue with museums, foundations, and private collections.
-              </div>
+              <div class="exp-intro" id="p2-intro-expanded"></div>
+              <div class="exp-body" id="p2-body-expanded"></div>
             </div>
           </div>
           <button class="btn-back" onclick="collapse(event)">← Back</button>
         </div>
       </div>
 
-      <!-- Panel 3: Industrial Pumps & Art (unchanged) -->
+      <!-- Panel 3 -->
       <div class="panel-3-row" onclick="expand(3)" role="button" tabindex="0" aria-label="Industrial Pumps and Art">
         <div class="panel panel-3">
           <div class="panel-bar" style="background: var(--yellow);"></div>
-
           <div class="collapsed p3-collapsed">
             <div class="panel-number" style="margin-top: 0; margin-bottom: 12px;">03</div>
-            <div class="panel-title" style="font-size: clamp(22px, 3vw, 38px); letter-spacing: 0.01em;">Industrial Pumps &amp; Art</div>
-            <div class="panel-sub" style="margin-top: 8px; margin-bottom: 16px;">form finds function</div>
-            <div class="panel-cta">Enter →</div>
+            <div class="panel-title" id="p3-title-collapsed" style="font-size: clamp(22px, 3vw, 38px); letter-spacing: 0.01em;"></div>
+            <div class="panel-sub" id="p3-sub-collapsed" style="margin-top: 8px; margin-bottom: 16px;"></div>
+            <div class="panel-cta" id="p3-cta-collapsed"></div>
             <br><br>
           </div>
-
           <div class="expanded-inner" style="margin-top: 0;">
             <div style="margin-bottom: 48px; text-align: center;">
-              <div class="exp-title" style="font-size: clamp(32px, 4vw, 48px);">Industrial Pumps &amp; Art</div>
+              <div class="exp-title" id="p3-title-expanded" style="font-size: clamp(32px, 4vw, 48px);"></div>
             </div>
-
-            <div style="max-width: 860px; margin: 0 auto; width: 100%;">
-
-              <p style="font-size: 15px; line-height: 1.85; color: #555; font-weight: 300; max-width: 680px; margin-bottom: 64px;">
-                At first glance, industrial systems and cultural assets seem unrelated. One is driven by engineering, the other by meaning and context.
-                Yet both rely on the same discipline: precision in how information, responsibility, and time are managed.
-              </p>
-
-              <div style="margin-bottom: 56px; border-top: var(--border); padding-top: 32px;">
-                <div style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 30px); letter-spacing: -0.03em; color: var(--black); margin-bottom: 14px;">A Shared Language of Precision</div>
-                <p style="font-size: 14px; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 32px; max-width: 640px;">Long-term value is never accidental. It is built through structured documentation, clear histories, and consistent standards of handling. Whether managing technical systems or cultural objects, the underlying logic remains the same.</p>
-                <div style="padding-left: 24px; border-left: 2px solid var(--blue); margin-bottom: 24px;">
-                  <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); font-weight: 400; margin-bottom: 8px;">Central Data Management</div>
-                  <p style="font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;">All relevant information is brought into one place. Service histories, modifications, and origin records are unified into a single, reliable source of truth. This creates clarity across teams and preserves knowledge over time.</p>
-                </div>
-                <div style="padding-left: 24px; border-left: 2px solid var(--blue);">
-                  <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); font-weight: 400; margin-bottom: 8px;">Automation and Proactive Care</div>
-                  <p style="font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;">Well-designed systems do not react, they anticipate. Scheduled intervals, condition checks, and required actions are managed automatically, ensuring that attention is given at the right moment without disruption.</p>
-                </div>
-              </div>
-
-              <div style="margin-bottom: 56px; border-top: var(--border); padding-top: 32px;">
-                <div style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 30px); letter-spacing: -0.03em; color: var(--black); margin-bottom: 14px;">Resource Planning and Coordination</div>
-                <p style="font-size: 14px; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 32px; max-width: 640px;">Complex environments require precise allocation of time, expertise, and responsibility. Planning follows clear structures that ensure continuity and reduce operational friction.</p>
-                <div style="padding-left: 24px; border-left: 2px solid var(--red); margin-bottom: 24px;">
-                  <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); font-weight: 400; margin-bottom: 8px;">Expert Deployment</div>
-                  <p style="font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;">Specialists, logistics, and external partners are coordinated with accuracy. The right expertise is available exactly when needed, allowing operations to remain efficient and controlled.</p>
-                </div>
-                <div style="padding-left: 24px; border-left: 2px solid var(--red);">
-                  <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); font-weight: 400; margin-bottom: 8px;">Handling of Significant Assets</div>
-                  <p style="font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;">Every asset is treated according to its importance and condition. Defined processes ensure careful handling, continuity of knowledge, and a consistent standard of care throughout its lifecycle.</p>
-                </div>
-              </div>
-
-              <div style="margin-bottom: 56px; border-top: var(--border); padding-top: 32px;">
-                <div style="font-family: var(--font-display); font-size: clamp(22px, 2.8vw, 30px); letter-spacing: -0.03em; color: var(--black); margin-bottom: 14px;">Applied Intelligence in Daily Operations</div>
-                <p style="font-size: 14px; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 32px; max-width: 640px;">Data becomes valuable when it actively supports decisions. Information and processes are connected, enabling better timing, clearer priorities, and more informed actions.</p>
-                <div style="padding-left: 24px; border-left: 2px solid var(--yellow);">
-                  <div style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); font-weight: 400; margin-bottom: 8px;">A Unified Platform Approach</div>
-                  <p style="font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;">A single platform creates transparency across all levels of the organisation. With a structured implementation, stakeholders gain clarity while complex operations become aligned and easier to manage.</p>
-                </div>
-              </div>
-
-              <p style="font-size: 14px; line-height: 1.9; color: #999; font-weight: 300; font-style: italic; max-width: 640px; border-top: var(--border); padding-top: 32px; margin-bottom: 0;">
-                These two fields define the foundation not because they are similar on the surface, but because they reveal the same operational truth beneath it. Systems that preserve value, coordinate expertise, and create continuity over time.
-              </p>
-
-            </div>
-
+            <div id="p3-content" style="max-width: 860px; margin: 0 auto; width: 100%;"></div>
             <button class="btn-back" onclick="collapse(event)">← Back</button>
           </div>
         </div>
@@ -965,9 +828,9 @@
 
     <footer class="site-footer" style="justify-content: center;">
       <span style="display:flex;gap:24px;">
-        <span class="footer-right" onclick="goContact()">Contact</span>
-        <span class="footer-right" onclick="goImpressum()">Legal Notice</span>
-        <span class="footer-right">pumpolino.com</span>
+        <span class="footer-right" onclick="goContact()" id="footer-contact"></span>
+        <span class="footer-right" onclick="goImpressum()" id="footer-legal"></span>
+        <span class="footer-right" id="footer-url"></span>
       </span>
     </footer>
     <div class="footer-bottom-corners">
@@ -985,70 +848,59 @@
           <div class="logo-word">pump<em>o</em>lino</div>
         </a>
         <div class="header-tagline-cell">
-          <div class="header-tagline">Precision, applied.</div>
+          <div class="header-tagline" id="contact-page-tagline"></div>
         </div>
       </div>
       <div class="header-nav-cell">
-        <a class="nav-link" onclick="goHome()">← Home</a>
+        <a class="nav-link" onclick="goHome()" id="contact-nav-back"></a>
       </div>
     </header>
-
     <div class="contact-main">
       <div class="contact-left">
         <div class="contact-color-block"></div>
-        <div class="contact-eyebrow">Contact</div>
-        <div class="contact-title">Write<br>to us.</div>
-        <p class="contact-note">
-          We reply <strong>personally.</strong><br>
-          no templates,<br>no automation.<br><br>
-          pumpolino.com
-        </p>
+        <div class="contact-eyebrow" id="contact-eyebrow"></div>
+        <div class="contact-title" id="contact-title"></div>
+        <p class="contact-note" id="contact-note"></p>
       </div>
       <div class="contact-divider"></div>
       <div class="contact-right">
         <form class="contact-form" id="contact-form" onsubmit="submitForm(event)" novalidate>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="first-name">First name</label>
+              <label class="form-label" for="first-name" id="lbl-firstname"></label>
               <input class="form-input" type="text" id="first-name" name="first_name" placeholder="Jane" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="last-name">Last name</label>
+              <label class="form-label" for="last-name" id="lbl-lastname"></label>
               <input class="form-input" type="text" id="last-name" name="last_name" placeholder="Smith" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="email">E-mail <span class="req">*</span></label>
+            <label class="form-label" for="email" id="lbl-email"></label>
             <input class="form-input" type="email" id="email" name="email" placeholder="jane@example.com" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="phone">Phone <span class="opt">optional · for callback</span></label>
+            <label class="form-label" for="phone" id="lbl-phone"></label>
             <input class="form-input" type="tel" id="phone" name="phone" placeholder="+41 79 000 00 00">
           </div>
           <div class="form-group">
-            <label class="form-label" for="subject">Subject <span class="req">*</span></label>
+            <label class="form-label" for="subject" id="lbl-subject"></label>
             <input class="form-input" type="text" id="subject" name="subject" placeholder="e.g. General enquiry" required>
-            <div class="subject-hints">
-              <button type="button" class="subject-hint" onclick="setSubject(this,'General Enquiry')">General Enquiry</button>
-              <button type="button" class="subject-hint" onclick="setSubject(this,'Support')">Support</button>
-              <button type="button" class="subject-hint" onclick="setSubject(this,'Feedback')">Feedback</button>
-              <button type="button" class="subject-hint" onclick="setSubject(this,'Other')">Other</button>
-            </div>
+            <div class="subject-hints" id="subject-hints"></div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="message">Message <span class="req">*</span></label>
+            <label class="form-label" for="message" id="lbl-message"></label>
             <textarea class="form-textarea" id="message" name="message" placeholder="Your enquiry …" required></textarea>
           </div>
-          <button class="form-submit" type="submit">Send message →</button>
+          <button class="form-submit" type="submit" id="btn-submit"></button>
         </form>
         <div class="form-success" id="form-success">
-          <p><strong>Thank you.</strong><br>Your message has been received. We will be in touch shortly.</p>
+          <p id="form-success-text"></p>
         </div>
       </div>
     </div>
-
     <footer class="site-footer">
-      <span class="footer-right" onclick="goHome()">← Back to home</span>
+      <span class="footer-right" onclick="goHome()" id="contact-footer-back"></span>
     </footer>
   </div>
 
@@ -1061,137 +913,428 @@
           <div class="logo-word">pump<em>o</em>lino</div>
         </a>
         <div class="header-tagline-cell">
-          <div class="header-tagline">Precision, applied.</div>
+          <div class="header-tagline" id="imp-page-tagline"></div>
         </div>
       </div>
       <div class="header-nav-cell">
-        <a class="nav-link" onclick="goHome()">← Home</a>
+        <a class="nav-link" onclick="goHome()" id="imp-nav-back"></a>
       </div>
     </header>
-
     <div class="impressum-main">
       <div class="impressum-left">
         <div class="impressum-color-block"></div>
-        <div class="impressum-eyebrow">Legal Notice</div>
-        <div class="impressum-title">Legal<br>Notice.</div>
-        <p class="impressum-note">As of 2025</p>
+        <div class="impressum-eyebrow" id="imp-eyebrow"></div>
+        <div class="impressum-title" id="imp-title"></div>
+        <p class="impressum-note" id="imp-note"></p>
       </div>
       <div class="impressum-divider"></div>
-      <div class="impressum-right">
-        <div class="imp-section">
-          <div class="imp-section-title">Company Details</div>
-          <address class="imp-address">
-            <strong>Pumpolino GmbH</strong><br>
-            Musterstrasse 12<br>
-            8001 Zürich<br>
-            Switzerland
-          </address>
-        </div>
-        <div class="imp-section">
-          <div class="imp-section-title">Disclaimer</div>
-          <div class="imp-body">
-            The contents of this website have been compiled with the greatest possible care. However, Pumpolino accepts no responsibility for the accuracy, completeness or timeliness of the information provided. As a service provider, we are responsible for our own content on these pages in accordance with applicable law.<br><br>
-            We are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information in accordance with general law remain unaffected.<br><br>
-            Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator of those pages is always responsible for their content. We accept no liability for any such linked content.
-          </div>
-        </div>
-        <div class="imp-section">
-          <div class="imp-section-title">Privacy</div>
-          <div class="imp-body">
-            It is generally possible to use our website without providing personal data. Where personal data (such as name, address or email address) is collected on our pages, this is always on a voluntary basis.<br><br>
-            We point out that data transmission over the internet (e.g. communication by email) may be subject to security vulnerabilities. Complete protection of data from access by third parties is not possible.<br><br>
-            We hereby expressly object to the use of contact data published as part of our legal notice obligation by third parties for the purpose of sending unsolicited advertising and informational materials.
-          </div>
-        </div>
-      </div>
+      <div class="impressum-right" id="imp-right"></div>
     </div>
-
     <footer class="site-footer">
-      <span class="footer-right" onclick="goHome()">← Back to home</span>
+      <span class="footer-right" onclick="goHome()" id="imp-footer-back"></span>
     </footer>
   </div>
 
   <script>
-    function toggleProduct(id) {
-      var el = document.getElementById(id);
-      el.classList.toggle('open');
-    }
+  /* ================================================================
+     ✏️  PUMPOLINO —  TEXT
+     change text oly here
+  ================================================================ */
+  var CONTENT = {
 
-    function toggleMenu() {
-      var h = document.getElementById('hamburger');
-      var o = document.getElementById('nav-overlay');
-      h.classList.toggle('open');
-      o.classList.toggle('open');
-    }
-    function closeMenu() {
-      var h = document.getElementById('hamburger');
-      h.classList.remove('open');
-      document.getElementById('nav-overlay').classList.remove('open');
-    }
-    function menuGoPanel(n) {
-      closeMenu();
-      showPage('page-home');
-      setTimeout(function(){ expand(n); }, 50);
-    }
-    function menuGoContact() {
-      closeMenu();
-      goContact();
-    }
+    site: {
+      tagline:   'Precision, applied.',
+      url:       'pumpolino.com',
+    },
 
-    var current = 0;
+    nav: {
+      panel1:    'Process & Intelligence',
+      panel2:    'Art & Provenance',
+      panel3:    'Industrial Pumps & Art',
+      contact:   'Contact',
+      back:      '← Home',
+    },
 
-    (function() {
-      var colours = ['#D32F2F', '#1565C0', '#F9A825'];
-      for (var i = colours.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = colours[i]; colours[i] = colours[j]; colours[j] = tmp;
-      }
-      document.querySelector('.m-corner-1').style.background = colours[0];
-      document.querySelector('.m-corner-2').style.background = colours[1];
-      document.querySelector('.m-corner-3').style.background = colours[2];
-    })();
+    footer: {
+      contact:   'Contact',
+      legal:     'Legal Notice',
+    },
 
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-      document.getElementById(id).classList.add('active');
-      window.scrollTo(0,0);
-    }
-    function goHome() {
-      current = 0;
-      document.getElementById('panels').className = 'panels';
-      showPage('page-home');
-    }
-    function goContact() { showPage('page-contact'); }
-    function goImpressum() { showPage('page-impressum'); }
+    /* ── Panel 1 ── */
+    panel1: {
+      title:     'Process &<br>Intelligence',
+      sub:       'Consulting · Data · AI',
+      teaser:    'We work where <strong>complexity asks for calm.</strong>',
+      cta:       'Enter →',
+      intro:     'We work where <strong>complexity asks for calm.</strong>',
+      body:      'Systems that move: water · information · decisions<br><br>Pumpolino combines deep technical expertise in industrial processes with modern data architecture and applied intelligence.',
 
-    function expand(n) {
-      if (current === n) return;
-      current = n;
-      document.getElementById('panels').className = 'panels expanded-' + n;
-    }
-    function collapse(e) {
-      e.stopPropagation();
-      current = 0;
-      document.getElementById('panels').className = 'panels';
-    }
+      serviceflow: {
+        title:   'Pumpolino ServiceFlow',
+        sub:     'Software · Service · Automation',
+        lead:    'Moving from reactive service to controlled operations. ServiceFlow transforms efficiency into structure, bringing service history, scheduling, and resource allocation into a single, transparent system.',
+        stepsLabel: 'Implementation',
+        features: [
+          {
+            label: 'Central Data Management',
+            text:  'All service history and product customisations are unified in one place. Knowledge that was scattered across teams and documents becomes a single, reliable source of truth: accessible and consistent over time.',
+          },
+          {
+            label: 'Automation',
+            text:  'Well-designed systems do not react, they anticipate. Service intervals are tracked automatically and technicians are notified before issues arise, shifting the operating mode from reactive to proactive.',
+          },
+          {
+            label: 'Resource Planning',
+            text:  'Specialists, spare parts, and logistics are coordinated with accuracy. The right expertise is available exactly when needed, reducing operational friction and keeping service delivery consistent.',
+          },
+        ],
+        steps: [
+          { title: 'Analysis',                   text: 'Definition of processes and identification of tailored features.' },
+          { title: 'Configuration & Migration',  text: 'Data integration into existing workflows.' },
+          { title: 'Rollout',                    text: 'Phased implementation with user training.' },
+        ],
+      },
 
-    function setSubject(btn, val) {
-      document.getElementById('subject').value = val;
-      document.querySelectorAll('.subject-hint').forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-    }
+      flowsales: {
+        title:   'Pumpolino FlowSales',
+        sub:     'Software · Sales · Intelligence',
+        lead:    'Structuring decisions before they are made. FlowSales turns experience into reproducible outcomes. It transforms project knowledge into structured sales intelligence that supports every stage of the sales process.',
+        stepsLabel: 'Implementation',
+        features: [
+          {
+            label: 'Digital Twin',
+            text:  'Every project is captured in full: documents, certifications, configurations, and sensor data are centralised into a structured record. This makes institutional knowledge searchable, comparable, and available at the moment it is needed.',
+          },
+          {
+            label: 'Sales Enablement',
+            text:  'Relevant references and comparable projects are surfaced at the right moment in the sales process. Conversion improves because proposals are grounded in demonstrated experience rather than general capability.',
+          },
+          {
+            label: 'Quotation Support',
+            text:  'Semi-automated offers are generated from existing configurations and project data. Teams spend less time rebuilding proposals from scratch and more time on the decisions that require genuine expertise.',
+          },
+        ],
+        steps: [
+          { title: 'Data Structuring',    text: 'Organisation of relevant project and reference data.' },
+          { title: 'System Configuration',text: 'Mapping sales processes and integrating data sources.' },
+          { title: 'Deployment',          text: 'Gradual rollout with optimisation and user enablement.' },
+        ],
+      },
+    },
 
-    function submitForm(e) {
-      e.preventDefault();
-      document.getElementById('contact-form').style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-    }
+    /* ── Panel 2 ── */
+    panel2: {
+      title:  'Art &<br>Provenance',
+      sub:    'Museums · Collections · Exhibition',
+      teaser: 'We work where <strong>meaning asks for discretion.</strong>',
+      cta:    'Enter →',
+      intro:  'We work where <strong>meaning asks for discretion.</strong>',
+      body:   'Objects of significance, handled with patience.<br><br>Pumpolino accompanies works of art through the careful architecture of acquisition, placement, and exhibition, in dialogue with museums, foundations, and private collections.',
+    },
 
-    document.querySelectorAll('.panel').forEach(function(p) {
-      p.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p.click(); }
+    /* ── Panel 3 ── */
+    panel3: {
+      title:  'Industrial Pumps & Art',
+      sub:    'form finds function',
+      cta:    'Enter →',
+      intro:  'At first glance, industrial systems and cultural assets seem unrelated. One is driven by engineering, the other by meaning and context. Yet both rely on the same discipline: precision in how information, responsibility, and time are managed.',
+      sections: [
+        {
+          title: 'A Shared Language of Precision',
+          lead:  'Long-term value is never accidental. It is built through structured documentation, clear histories, and consistent standards of handling. Whether managing technical systems or cultural objects, the underlying logic remains the same.',
+          accent: 'blue',
+          features: [
+            { label: 'Central Data Management',    text: 'All relevant information is brought into one place. Service histories, modifications, and origin records are unified into a single, reliable source of truth. This creates clarity across teams and preserves knowledge over time.' },
+            { label: 'Automation and Proactive Care', text: 'Well-designed systems do not react, they anticipate. Scheduled intervals, condition checks, and required actions are managed automatically, ensuring that attention is given at the right moment without disruption.' },
+          ],
+        },
+        {
+          title: 'Resource Planning and Coordination',
+          lead:  'Complex environments require precise allocation of time, expertise, and responsibility. Planning follows clear structures that ensure continuity and reduce operational friction.',
+          accent: 'red',
+          features: [
+            { label: 'Expert Deployment',           text: 'Specialists, logistics, and external partners are coordinated with accuracy. The right expertise is available exactly when needed, allowing operations to remain efficient and controlled.' },
+            { label: 'Handling of Significant Assets', text: 'Every asset is treated according to its importance and condition. Defined processes ensure careful handling, continuity of knowledge, and a consistent standard of care throughout its lifecycle.' },
+          ],
+        },
+        {
+          title: 'Applied Intelligence in Daily Operations',
+          lead:  'Data becomes valuable when it actively supports decisions. Information and processes are connected, enabling better timing, clearer priorities, and more informed actions.',
+          accent: 'yellow',
+          features: [
+            { label: 'A Unified Platform Approach', text: 'A single platform creates transparency across all levels of the organisation. With a structured implementation, stakeholders gain clarity while complex operations become aligned and easier to manage.' },
+          ],
+        },
+      ],
+      closing: 'These two fields define the foundation not because they are similar on the surface, but because they reveal the same operational truth beneath it. Systems that preserve value, coordinate expertise, and create continuity over time.',
+    },
+
+    /* ── Contact ── */
+    contact: {
+      eyebrow:  'Contact',
+      title:    'Write<br>to us.',
+      note:     'We reply <strong>personally.</strong><br>no templates,<br>no automation.<br><br>pumpolino.com',
+      form: {
+        firstname:  'First name',
+        lastname:   'Last name',
+        email:      'E-mail',
+        phone:      'Phone',
+        phoneNote:  'optional · for callback',
+        subject:    'Subject',
+        message:    'Message',
+        submitBtn:  'Send message →',
+        hints:      ['General Enquiry', 'Support', 'Feedback', 'Other'],
+        success:    '<strong>Thank you.</strong><br>Your message has been received. We will be in touch shortly.',
+      },
+    },
+
+    /* ── Impressum ── */
+    impressum: {
+      eyebrow: 'Legal Notice',
+      title:   'Legal<br>Notice.',
+      note:    'As of 2025',
+      sections: [
+        {
+          title: 'Company Details',
+          html:  '<address class="imp-address"><strong>Pumpolino GmbH</strong><br>Musterstrasse 12<br>8001 Zürich<br>Switzerland</address>',
+        },
+        {
+          title: 'Disclaimer',
+          html:  '<div class="imp-body">The contents of this website have been compiled with the greatest possible care. However, Pumpolino accepts no responsibility for the accuracy, completeness or timeliness of the information provided. As a service provider, we are responsible for our own content on these pages in accordance with applicable law.<br><br>We are not obliged to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information in accordance with general law remain unaffected.<br><br>Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator of those pages is always responsible for their content. We accept no liability for any such linked content.</div>',
+        },
+        {
+          title: 'Privacy',
+          html:  '<div class="imp-body">It is generally possible to use our website without providing personal data. Where personal data (such as name, address or email address) is collected on our pages, this is always on a voluntary basis.<br><br>We point out that data transmission over the internet (e.g. communication by email) may be subject to security vulnerabilities. Complete protection of data from access by third parties is not possible.<br><br>We hereby expressly object to the use of contact data published as part of our legal notice obligation by third parties for the purpose of sending unsolicited advertising and informational materials.</div>',
+        },
+      ],
+    },
+
+  };
+  /* ================================================================
+     End CONTENT — do not change nothing from here on
+  ================================================================ */
+
+  function h(id, html) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+  function t(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function renderFeatures(containerId, features) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = features.map(function(f) {
+      return '<div class="p1-feature"><div class="p1-feature-label">' + f.label + '</div><p class="p1-feature-text">' + f.text + '</p></div>';
+    }).join('');
+  }
+
+  function renderSteps(containerId, steps) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = steps.map(function(s, i) {
+      return '<div class="p1-step"><div class="p1-step-num">' + (i + 1) + '</div><div class="p1-step-body"><div class="p1-step-title">' + s.title + '</div><div class="p1-step-desc">' + s.text + '</div></div></div>';
+    }).join('');
+  }
+
+  function renderP3Content() {
+    var c = CONTENT.panel3;
+    var el = document.getElementById('p3-content');
+    if (!el) return;
+    var html = '<p style="font-size:15px;line-height:1.85;color:#555;font-weight:300;max-width:680px;margin-bottom:64px;">' + c.intro + '</p>';
+    c.sections.forEach(function(s) {
+      var accentVar = s.accent === 'blue' ? 'var(--blue)' : s.accent === 'red' ? 'var(--red)' : 'var(--yellow)';
+      html += '<div style="margin-bottom:56px;border-top:var(--border);padding-top:32px;">';
+      html += '<div style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,30px);letter-spacing:-0.03em;color:var(--black);margin-bottom:14px;">' + s.title + '</div>';
+      html += '<p style="font-size:14px;line-height:1.9;color:#666;font-weight:300;margin-bottom:32px;max-width:640px;">' + s.lead + '</p>';
+      s.features.forEach(function(f, fi) {
+        var mb = fi < s.features.length - 1 ? 'margin-bottom:24px;' : '';
+        html += '<div style="padding-left:24px;border-left:2px solid ' + accentVar + ';' + mb + '">';
+        html += '<div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--black);font-weight:400;margin-bottom:8px;">' + f.label + '</div>';
+        html += '<p style="font-size:13px;line-height:1.85;color:#777;font-weight:300;margin:0;">' + f.text + '</p>';
+        html += '</div>';
       });
+      html += '</div>';
     });
+    html += '<p style="font-size:14px;line-height:1.9;color:#999;font-weight:300;font-style:italic;max-width:640px;border-top:var(--border);padding-top:32px;margin-bottom:0;">' + c.closing + '</p>';
+    el.innerHTML = html;
+  }
+
+  function renderContact() {
+    var c = CONTENT.contact;
+    h('contact-eyebrow', c.eyebrow);
+    h('contact-title', c.title);
+    h('contact-note', c.note);
+    t('lbl-firstname', c.form.firstname);
+    t('lbl-lastname', c.form.lastname);
+    h('lbl-email', 'E-mail <span class="req">*</span>');
+    h('lbl-phone', 'Phone <span class="opt">' + c.form.phoneNote + '</span>');
+    h('lbl-subject', 'Subject <span class="req">*</span>');
+    h('lbl-message', 'Message <span class="req">*</span>');
+    h('btn-submit', c.form.submitBtn);
+    h('form-success-text', c.form.success);
+    var hints = document.getElementById('subject-hints');
+    if (hints) {
+      hints.innerHTML = c.form.hints.map(function(hint) {
+        return '<button type="button" class="subject-hint" onclick="setSubject(this,\'' + hint + '\')">' + hint + '</button>';
+      }).join('');
+    }
+  }
+
+  function renderImpressum() {
+    var imp = CONTENT.impressum;
+    h('imp-eyebrow', imp.eyebrow);
+    h('imp-title', imp.title);
+    h('imp-note', imp.note);
+    var right = document.getElementById('imp-right');
+    if (right) {
+      right.innerHTML = imp.sections.map(function(s) {
+        return '<div class="imp-section"><div class="imp-section-title">' + s.title + '</div>' + s.html + '</div>';
+      }).join('');
+    }
+  }
+
+  function renderAll() {
+    var s = CONTENT.site;
+    var n = CONTENT.nav;
+    var p1 = CONTENT.panel1;
+    var p2 = CONTENT.panel2;
+    var p3 = CONTENT.panel3;
+
+    /* site-wide */
+    ['site-tagline','contact-page-tagline','imp-page-tagline'].forEach(function(id){ t(id, s.tagline); });
+
+    /* nav overlay */
+    h('nav-p1', n.panel1);  h('nav-p2', n.panel2);
+    h('nav-p3', n.panel3);  h('nav-contact', n.contact);
+
+    /* nav links */
+    h('header-nav-contact', n.contact);
+    ['contact-nav-back','imp-nav-back'].forEach(function(id){ t(id, n.back); });
+
+    /* footer */
+    t('footer-contact', n.contact);
+    t('footer-legal', CONTENT.footer.legal);
+    t('footer-url', s.url);
+    ['contact-footer-back','imp-footer-back'].forEach(function(id){ t(id, '← Back to home'); });
+
+    /* panel 1 */
+    h('p1-title-collapsed', p1.title);   t('p1-sub-collapsed', p1.sub);
+    h('p1-teaser-collapsed', p1.teaser); t('p1-cta-collapsed', p1.cta);
+    h('p1-title-expanded', p1.title);    t('p1-sub-expanded', p1.sub);
+    h('p1-intro-expanded', p1.intro);    h('p1-body-expanded', p1.body);
+
+    var sf = p1.serviceflow;
+    t('sf-title', sf.title);  t('sf-sub', sf.sub);
+    t('sf-lead', sf.lead);    t('sf-steps-label', sf.stepsLabel);
+    renderFeatures('sf-features', sf.features);
+    renderSteps('sf-steps', sf.steps);
+
+    var fls = p1.flowsales;
+    t('fls-title', fls.title);  t('fls-sub', fls.sub);
+    t('fls-lead', fls.lead);    t('fls-steps-label', fls.stepsLabel);
+    renderFeatures('fls-features', fls.features);
+    renderSteps('fls-steps', fls.steps);
+
+    /* panel 2 */
+    h('p2-title-collapsed', p2.title);   t('p2-sub-collapsed', p2.sub);
+    h('p2-teaser-collapsed', p2.teaser); t('p2-cta-collapsed', p2.cta);
+    h('p2-title-expanded', p2.title);    t('p2-sub-expanded', p2.sub);
+    h('p2-intro-expanded', p2.intro);    h('p2-body-expanded', p2.body);
+
+    /* panel 3 */
+    t('p3-title-collapsed', p3.title);  t('p3-sub-collapsed', p3.sub);
+    t('p3-cta-collapsed', p3.cta);      t('p3-title-expanded', p3.title);
+    renderP3Content();
+
+    /* contact & impressum */
+    renderContact();
+    renderImpressum();
+  }
+
+  renderAll();
+
+  /* ── App functions ── */
+  function toggleProduct(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function toggleMenu() {
+    var h = document.getElementById('hamburger');
+    var o = document.getElementById('nav-overlay');
+    h.classList.toggle('open');
+    o.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('nav-overlay').classList.remove('open');
+  }
+  function menuGoPanel(n) {
+    closeMenu();
+    showPage('page-home');
+    setTimeout(function(){ expand(n); }, 50);
+  }
+  function menuGoContact() { closeMenu(); goContact(); }
+
+  var current = 0;
+
+  (function() {
+    var colours = ['#D32F2F', '#1565C0', '#F9A825'];
+    for (var i = colours.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = colours[i]; colours[i] = colours[j]; colours[j] = tmp;
+    }
+    document.querySelector('.m-corner-1').style.background = colours[0];
+    document.querySelector('.m-corner-2').style.background = colours[1];
+    document.querySelector('.m-corner-3').style.background = colours[2];
+  })();
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function goHome() {
+    current = 0;
+    document.getElementById('panels').className = 'panels';
+    showPage('page-home');
+  }
+  function goContact() { showPage('page-contact'); }
+  function goImpressum() { showPage('page-impressum'); }
+
+  function expand(n) {
+    if (current === n) return;
+    current = n;
+    document.getElementById('panels').className = 'panels expanded-' + n;
+  }
+  function collapse(e) {
+    e.stopPropagation();
+    current = 0;
+    document.getElementById('panels').className = 'panels';
+  }
+
+  function setSubject(btn, val) {
+    document.getElementById('subject').value = val;
+    document.querySelectorAll('.subject-hint').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  document.querySelectorAll('.panel').forEach(function(p) {
+    p.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p.click(); }
+    });
+  });
   </script>
 </body>
 </html>
+  /* ================================================================
+     suno.com/s/AghHKUDXn6ZKCyDU
+  ================================================================ */
