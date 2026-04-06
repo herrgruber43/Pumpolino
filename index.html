@@ -9,6 +9,14 @@
   ╔══════════════════════════════════════════════════════════════════╗
   ║  PUMPOLINO — CHANGELOG                                           ║
   ╠══════════════════════════════════════════════════════════════════╣
+  ║  v1.53  2026-04-06                                               ║
+  ║    - Contact form: Web3Forms backend integrated                  ║
+  ║      access_key als hidden input im CONTENT-Objekt               ║
+  ║      submitForm() auf async fetch umgestellt (kein page reload)  ║
+  ║      first_name + last_name werden als "name" zusammengeführt    ║
+  ║      Fehlerzustand mit rotem Hinweis ergänzt                     ║
+  ║      honeypot field (botcheck) für Spam-Schutz hinzugefügt       ║
+  ║                                                                  ║
   ║  v1.52  2026-04-05                                               ║
   ║    - Alle sichtbaren Texte in CONTENT-Objekt ausgelagert         ║
   ║      HTML enthält nur noch Struktur, Texte nur noch im Script    ║
@@ -337,8 +345,6 @@
 
     /* ─────────────────────────────────────────────────────────────
        v1.47 — Panel 1 product sections, redesigned to match P3
-       Uses: serif section titles · border-left accents · prose layout
-       Replaces: .p1-cards grid · coloured card top-borders
     ───────────────────────────────────────────────────────────── */
 
     .p1-product {
@@ -348,7 +354,6 @@
       max-width: 860px;
     }
 
-    /* Product headline block — mirrors P3 h2 style */
     .p1-product-header {
       margin-bottom: 48px;
     }
@@ -369,7 +374,6 @@
       max-width: 680px; margin-top: 20px; margin-bottom: 0;
     }
 
-    /* Feature blocks — mirrors P3 border-left accent blocks */
     .p1-features { margin-bottom: 48px; }
     .p1-feature {
       padding-left: 24px;
@@ -385,13 +389,9 @@
       font-size: 13px; line-height: 1.85; color: #777; font-weight: 300; margin: 0;
     }
 
-    /* Blue accent for ServiceFlow */
     .p1-product.service .p1-feature { border-left: 2px solid var(--blue); }
-
-    /* Red accent for FlowSales */
     .p1-product.sales .p1-feature { border-left: 2px solid var(--red); }
 
-    /* Implementation steps — retained, slightly tightened */
     .p1-steps-label {
       font-size: 8px; letter-spacing: 0.3em;
       text-transform: uppercase; color: #aaa; font-weight: 300; margin-bottom: 12px;
@@ -408,7 +408,6 @@
       font-weight: 400; display: flex; align-items: center;
       justify-content: center; letter-spacing: -0.02em; min-height: 72px;
     }
-    /* Step number colour follows product accent */
     .p1-product.service .p1-step-num { background: var(--blue); }
     .p1-product.sales   .p1-step-num { background: var(--red); }
 
@@ -566,12 +565,20 @@
       align-self: flex-start; transition: background 0.25s, border-color 0.25s;
     }
     .form-submit:hover { background: var(--blue); border-color: var(--blue); }
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
     .form-success {
       display: none; border-left: 10px solid var(--green);
       padding: 24px 28px; background: rgba(46,125,50,0.04);
     }
     .form-success p { font-size: 14px; color: var(--green); font-weight: 300; line-height: 1.75; }
     .form-success strong { font-weight: 600; }
+    /* v1.53 — error state */
+    .form-error {
+      display: none; border-left: 10px solid var(--red);
+      padding: 24px 28px; background: rgba(211,47,47,0.04);
+      margin-top: 8px;
+    }
+    .form-error p { font-size: 14px; color: var(--red); font-weight: 300; line-height: 1.75; }
 
     /* IMPRESSUM PAGE */
     .impressum-main {
@@ -866,7 +873,15 @@
       </div>
       <div class="contact-divider"></div>
       <div class="contact-right">
-        <form class="contact-form" id="contact-form" onsubmit="submitForm(event)" novalidate>
+        <!-- v1.53: action + hidden fields for Web3Forms; submit handled via fetch -->
+        <form class="contact-form" id="contact-form" novalidate>
+          <!-- Web3Forms access key -->
+          <input type="hidden" name="access_key" id="w3f-access-key">
+          <!-- Honeypot anti-spam field — must remain empty -->
+          <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+          <!-- from_name shown in inbox subject -->
+          <input type="hidden" name="from_name" value="Pumpolino Website">
+
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="first-name" id="lbl-firstname"></label>
@@ -894,10 +909,15 @@
             <label class="form-label" for="message" id="lbl-message"></label>
             <textarea class="form-textarea" id="message" name="message" placeholder="Your enquiry …" required></textarea>
           </div>
-          <button class="form-submit" type="submit" id="btn-submit"></button>
+          <button class="form-submit" type="button" id="btn-submit" onclick="submitForm()"></button>
         </form>
+        <!-- Success state -->
         <div class="form-success" id="form-success">
           <p id="form-success-text"></p>
+        </div>
+        <!-- Error state (v1.53) -->
+        <div class="form-error" id="form-error">
+          <p id="form-error-text"></p>
         </div>
       </div>
     </div>
@@ -940,7 +960,7 @@
   <script>
   /* ================================================================
      ✏️  PUMPOLINO —  TEXT
-     change text oly here
+     change text only here
   ================================================================ */
   var CONTENT = {
 
@@ -1076,6 +1096,8 @@
       eyebrow:  'Contact',
       title:    'Write<br>to us.',
       note:     'We reply <strong>personally.</strong><br>no templates,<br>no automation.<br><br>pumpolino.com',
+      /* ── v1.53: Web3Forms access key ── */
+      web3formsKey: '723e61ce-6741-42dd-86f0-931f8375baa3',
       form: {
         firstname:  'First name',
         lastname:   'Last name',
@@ -1085,8 +1107,10 @@
         subject:    'Subject',
         message:    'Message',
         submitBtn:  'Send message →',
+        submitBtnSending: 'Sending …',
         hints:      ['General Enquiry', 'Support', 'Feedback', 'Other'],
         success:    '<strong>Thank you.</strong><br>Your message has been received. We will be in touch shortly.',
+        error:      'Something went wrong. Please try again or write to us directly.',
       },
     },
 
@@ -1113,7 +1137,7 @@
 
   };
   /* ================================================================
-     End CONTENT — do not change nothing from here on
+     End CONTENT — do not change anything from here on
   ================================================================ */
 
   function h(id, html) {
@@ -1177,6 +1201,10 @@
     h('lbl-message', 'Message <span class="req">*</span>');
     h('btn-submit', c.form.submitBtn);
     h('form-success-text', c.form.success);
+    h('form-error-text', c.form.error);
+    /* inject access key into hidden field */
+    var keyEl = document.getElementById('w3f-access-key');
+    if (keyEl) keyEl.value = c.web3formsKey;
     var hints = document.getElementById('subject-hints');
     if (hints) {
       hints.innerHTML = c.form.hints.map(function(hint) {
@@ -1323,10 +1351,63 @@
     btn.classList.add('active');
   }
 
-  function submitForm(e) {
-    e.preventDefault();
-    document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+  /* ── v1.53: Web3Forms async submit ── */
+  async function submitForm() {
+    var form    = document.getElementById('contact-form');
+    var btn     = document.getElementById('btn-submit');
+    var success = document.getElementById('form-success');
+    var errorEl = document.getElementById('form-error');
+    var c       = CONTENT.contact.form;
+
+    /* basic HTML5 validation */
+    var required = form.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function(el) { if (!el.value.trim()) valid = false; });
+    if (!valid) {
+      form.reportValidity();
+      return;
+    }
+
+    /* combine first + last name into a single "name" field for Web3Forms */
+    var firstName = document.getElementById('first-name').value.trim();
+    var lastName  = document.getElementById('last-name').value.trim();
+
+    /* build JSON payload */
+    var payload = {
+      access_key: CONTENT.contact.web3formsKey,
+      from_name:  'Pumpolino Website',
+      name:       (firstName + ' ' + lastName).trim(),
+      email:      document.getElementById('email').value.trim(),
+      phone:      document.getElementById('phone').value.trim(),
+      subject:    document.getElementById('subject').value.trim(),
+      message:    document.getElementById('message').value.trim(),
+      botcheck:   form.querySelector('[name="botcheck"]').checked,
+    };
+
+    /* loading state */
+    btn.disabled = true;
+    btn.textContent = c.submitBtnSending;
+    errorEl.style.display = 'none';
+
+    try {
+      var response = await fetch('https://api.web3forms.com/submit', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+      var data = await response.json();
+
+      if (data.success) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error(data.message || 'Unknown error');
+      }
+    } catch (err) {
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      h('btn-submit', c.submitBtn);
+    }
   }
 
   document.querySelectorAll('.panel').forEach(function(p) {
