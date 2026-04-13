@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Industrial Pumps & Art — Pumpolino</title>
+  <meta name="description" content="Form finds function. Precision as a shared language."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .page { display: flex; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
+    .page-main { flex: 1; padding: 52px 56px 72px 52px; position: relative; z-index: 10; }
+    @media (max-width: 760px) { .page-main { padding: 36px 28px 56px 28px; } }
+  </style>
+</head>
+<body>
+
+<div class="m-left"></div>
+<div class="m-top"></div>
+<div class="m-corner-1"></div>
+<div class="m-corner-2"></div>
+
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a class="nav-overlay-item" href="/"><span class="nav-overlay-num">↩</span>Home</a>
+  <a class="nav-overlay-item" href="/process"><span class="nav-overlay-num">01</span>Process & Intelligence</a>
+  <a class="nav-overlay-item" href="/art"><span class="nav-overlay-num">02</span>Art & Provenance</a>
+  <a class="nav-overlay-item" href="/pumps-and-art"><span class="nav-overlay-num">03</span>Industrial Pumps & Art</a>
+  <a class="nav-overlay-item" href="/contact"><span class="nav-overlay-num"></span>Contact</a>
+</div>
+
+<div class="page">
+
+  <header class="site-header">
+    <div class="header-left-cell"></div>
+    <div class="header-center-cell">
+      <a class="logo" href="/">
+        <div class="logo-word">pump<em>o</em>lino</div>
+      </a>
+      <div class="header-tagline-cell">
+        <div class="header-tagline">Precision, applied.</div>
+      </div>
+    </div>
+    <div class="header-nav-cell">
+      <a class="nav-link" href="/">← Home</a>
+      <a class="nav-link" href="/contact">Contact</a>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div style="height:10px;background:var(--yellow);margin:-52px -56px 52px -52px;"></div>
+
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="exp-title" id="pu-title" style="font-size:clamp(32px,4vw,48px);"></div>
+    </div>
+
+    <div id="pu-content" style="max-width:860px;margin:0 auto;width:100%;"></div>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-right" href="/">← Home</a>
+    <span style="display:flex;gap:24px;">
+      <a class="footer-right" href="/contact">Contact</a>
+      <a class="footer-right" href="/legal">Legal Notice</a>
+    </span>
+  </footer>
+
+</div>
+
+<script src="/assets/content.js"></script>
+<script src="/assets/shared.js"></script>
+<script>
+  initShared();
+
+  var c = CONTENT.pumps;
+  document.getElementById('pu-title').textContent = c.title;
+
+  var html = '<p style="font-size:15px;line-height:1.85;color:#555;font-weight:300;max-width:680px;margin-bottom:64px;">' + c.intro + '</p>';
+
+  c.sections.forEach(function(s) {
+    var accentVar = s.accent === 'blue' ? 'var(--blue)' : s.accent === 'red' ? 'var(--red)' : 'var(--yellow)';
+    html += '<div style="margin-bottom:56px;border-top:var(--border);padding-top:32px;">';
+    html += '<div style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,30px);letter-spacing:-0.03em;color:var(--black);margin-bottom:14px;">' + s.title + '</div>';
+    html += '<p style="font-size:14px;line-height:1.9;color:#666;font-weight:300;margin-bottom:32px;max-width:640px;">' + s.lead + '</p>';
+    s.features.forEach(function(f, fi) {
+      var mb = fi < s.features.length - 1 ? 'margin-bottom:24px;' : '';
+      html += '<div style="padding-left:24px;border-left:2px solid ' + accentVar + ';' + mb + '">';
+      html += '<div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--black);font-weight:400;margin-bottom:8px;">' + f.label + '</div>';
+      html += '<p style="font-size:13px;line-height:1.85;color:#777;font-weight:300;margin:0;">' + f.text + '</p>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  html += '<p style="font-size:14px;line-height:1.9;color:#999;font-weight:300;font-style:italic;max-width:640px;border-top:var(--border);padding-top:32px;margin-bottom:0;">' + c.closing + '</p>';
+
+  document.getElementById('pu-content').innerHTML = html;
+</script>
+</body>
+</html>
