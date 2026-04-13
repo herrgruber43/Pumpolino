@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Legal Notice — Pumpolino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .page { display: flex; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
+    .inner-eyebrow.blue::before { background: var(--blue); }
+    .inner-right-legal { padding: 52px 56px 52px 52px; display: flex; flex-direction: column; gap: 48px; max-width: 680px; }
+  </style>
+</head>
+<body>
+
+<div class="m-left"></div>
+<div class="m-top"></div>
+<div class="m-corner-1"></div>
+<div class="m-corner-2"></div>
+
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a class="nav-overlay-item" href="/"><span class="nav-overlay-num">↩</span>Home</a>
+  <a class="nav-overlay-item" href="/process"><span class="nav-overlay-num">01</span>Process & Intelligence</a>
+  <a class="nav-overlay-item" href="/art"><span class="nav-overlay-num">02</span>Art & Provenance</a>
+  <a class="nav-overlay-item" href="/pumps-and-art"><span class="nav-overlay-num">03</span>Industrial Pumps & Art</a>
+  <a class="nav-overlay-item" href="/contact"><span class="nav-overlay-num"></span>Contact</a>
+</div>
+
+<div class="page">
+
+  <header class="site-header">
+    <div class="header-left-cell"></div>
+    <div class="header-center-cell">
+      <a class="logo" href="/">
+        <div class="logo-word">pump<em>o</em>lino</div>
+      </a>
+      <div class="header-tagline-cell">
+        <div class="header-tagline">Precision, applied.</div>
+      </div>
+    </div>
+    <div class="header-nav-cell">
+      <a class="nav-link" href="/">← Home</a>
+    </div>
+  </header>
+
+  <div class="inner-main">
+    <div class="inner-left">
+      <div class="inner-color-block" style="background:var(--blue);"></div>
+      <div class="inner-eyebrow blue" id="l-eyebrow"></div>
+      <div class="inner-title" id="l-title"></div>
+      <p class="inner-note" id="l-note"></p>
+    </div>
+    <div class="inner-divider"></div>
+    <div class="inner-right-legal" id="l-sections"></div>
+  </div>
+
+  <footer class="site-footer">
+    <a class="footer-right" href="/">← Home</a>
+  </footer>
+
+</div>
+
+<script src="/assets/content.js"></script>
+<script src="/assets/shared.js"></script>
+<script>
+  initShared();
+
+  var l = CONTENT.legal;
+  document.getElementById('l-eyebrow').textContent = l.eyebrow;
+  document.getElementById('l-title').innerHTML     = l.title;
+  document.getElementById('l-note').textContent    = l.note;
+
+  document.getElementById('l-sections').innerHTML = l.sections.map(function(s){
+    return '<div class="imp-section"><div class="imp-section-title">'+s.title+'</div>'+s.html+'</div>';
+  }).join('');
+</script>
+</body>
+</html>
