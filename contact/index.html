@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Pumpolino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .page { display: flex; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
+    .inner-eyebrow.red::before { background: var(--red); }
+  </style>
+</head>
+<body>
+
+<div class="m-left"></div>
+<div class="m-top"></div>
+<div class="m-corner-1"></div>
+<div class="m-corner-2"></div>
+
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a class="nav-overlay-item" href="/"><span class="nav-overlay-num">↩</span>Home</a>
+  <a class="nav-overlay-item" href="/process"><span class="nav-overlay-num">01</span>Process & Intelligence</a>
+  <a class="nav-overlay-item" href="/art"><span class="nav-overlay-num">02</span>Art & Provenance</a>
+  <a class="nav-overlay-item" href="/pumps-and-art"><span class="nav-overlay-num">03</span>Industrial Pumps & Art</a>
+  <a class="nav-overlay-item" href="/contact"><span class="nav-overlay-num"></span>Contact</a>
+</div>
+
+<div class="page">
+
+  <header class="site-header">
+    <div class="header-left-cell"></div>
+    <div class="header-center-cell">
+      <a class="logo" href="/">
+        <div class="logo-word">pump<em>o</em>lino</div>
+      </a>
+      <div class="header-tagline-cell">
+        <div class="header-tagline">Precision, applied.</div>
+      </div>
+    </div>
+    <div class="header-nav-cell">
+      <a class="nav-link" href="/">← Home</a>
+    </div>
+  </header>
+
+  <div class="inner-main">
+    <div class="inner-left">
+      <div class="inner-color-block" style="background:var(--red);"></div>
+      <div class="inner-eyebrow red" id="c-eyebrow"></div>
+      <div class="inner-title" id="c-title"></div>
+      <p class="inner-note" id="c-note"></p>
+    </div>
+    <div class="inner-divider"></div>
+    <div class="inner-right">
+      <form class="contact-form" id="contact-form" novalidate>
+        <input type="hidden" name="access_key" id="w3f-access-key">
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="from_name" value="Pumpolino Website">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="first-name" id="lbl-firstname"></label>
+            <input class="form-input" type="text" id="first-name" name="first_name" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="last-name" id="lbl-lastname"></label>
+            <input class="form-input" type="text" id="last-name" name="last_name" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail <span class="req">*</span></label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="jane@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone <span class="opt">optional · for callback</span></label>
+          <input class="form-input" type="tel" id="phone" name="phone" placeholder="+41 79 000 00 00">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject <span class="req">*</span></label>
+          <input class="form-input" type="text" id="subject" name="subject" placeholder="e.g. General enquiry" required>
+          <div class="subject-hints" id="subject-hints"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Message <span class="req">*</span></label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Your enquiry …" required></textarea>
+        </div>
+        <button class="form-submit" type="button" id="btn-submit" onclick="submitForm()"></button>
+      </form>
+      <div class="form-success" id="form-success"><p id="form-success-text"></p></div>
+      <div class="form-error"   id="form-error">  <p id="form-error-text"></p></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <a class="footer-right" href="/">← Home</a>
+  </footer>
+
+</div>
+
+<script src="/assets/content.js"></script>
+<script src="/assets/shared.js"></script>
+<script>
+  initShared();
+
+  var c = CONTENT.contact;
+  document.getElementById('c-eyebrow').textContent   = c.eyebrow;
+  document.getElementById('c-title').innerHTML       = c.title;
+  document.getElementById('c-note').innerHTML        = c.note;
+  document.getElementById('lbl-firstname').textContent = c.form.firstname;
+  document.getElementById('lbl-lastname').textContent  = c.form.lastname;
+  document.getElementById('btn-submit').innerHTML    = c.form.submitBtn;
+  document.getElementById('form-success-text').innerHTML = c.form.success;
+  document.getElementById('form-error-text').textContent = c.form.error;
+  document.getElementById('w3f-access-key').value   = c.web3formsKey;
+
+  document.getElementById('subject-hints').innerHTML = c.form.hints.map(function(h){
+    return '<button type="button" class="subject-hint" onclick="setSubject(this,\''+h+'\')">'+h+'</button>';
+  }).join('');
+
+  function setSubject(btn, val) {
+    document.getElementById('subject').value = val;
+    document.querySelectorAll('.subject-hint').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  async function submitForm() {
+    var form    = document.getElementById('contact-form');
+    var btn     = document.getElementById('btn-submit');
+    var success = document.getElementById('form-success');
+    var errorEl = document.getElementById('form-error');
+
+    var required = form.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function(el){ if (!el.value.trim()) valid = false; });
+    if (!valid) { form.reportValidity(); return; }
+
+    var firstName = document.getElementById('first-name').value.trim();
+    var lastName  = document.getElementById('last-name').value.trim();
+
+    var payload = {
+      access_key: c.web3formsKey,
+      from_name:  'Pumpolino Website',
+      name:       (firstName + ' ' + lastName).trim(),
+      email:      document.getElementById('email').value.trim(),
+      phone:      document.getElementById('phone').value.trim(),
+      subject:    document.getElementById('subject').value.trim(),
+      message:    document.getElementById('message').value.trim(),
+      botcheck:   form.querySelector('[name="botcheck"]').checked,
+    };
+
+    btn.disabled = true;
+    btn.textContent = c.form.submitBtnSending;
+    errorEl.style.display = 'none';
+
+    try {
+      var response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      var data = await response.json();
+      if (data.success) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        throw new Error(data.message || 'Unknown error');
+      }
+    } catch(e) {
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = c.form.submitBtn;
+    }
+  }
+</script>
+</body>
+</html>
