@@ -79,8 +79,8 @@
 
 <div class="m-left"></div>
 <div class="m-top"></div>
-<div class="m-corner-1"></div>
-<div class="m-corner-2"></div>
+<div class="m-corner-1" onclick="this.classList.add('hidden')"></div>
+<div class="m-corner-2" onclick="this.classList.add('hidden')"></div>
 
 <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
   <span></span><span></span><span></span>
@@ -115,7 +115,6 @@
     <!-- Tile 1 -->
     <a class="tile" href="/process">
       <div class="tile-bar blue"></div>
-      <div class="tile-number">01</div>
       <div class="tile-title">Process &<br>Intelligence</div>
       <div class="tile-sub">Consulting · Data · AI</div>
       <div class="tile-body">We work where <strong>complexity asks for calm.</strong></div>
@@ -128,7 +127,6 @@
     <!-- Tile 2 -->
     <a class="tile" href="/art">
       <div class="tile-bar red"></div>
-      <div class="tile-number">02</div>
       <div class="tile-title">Art &<br>Provenance</div>
       <div class="tile-sub">Museums · Collections · Exhibition</div>
       <div class="tile-body">We work where <strong>meaning asks for discretion.</strong></div>
@@ -140,7 +138,6 @@
     <a class="tile-3-row" href="/pumps-and-art">
       <div class="tile-3">
         <div class="tile-3-bar"></div>
-        <div class="tile-number" style="margin-top:0;margin-bottom:12px;">03</div>
         <div class="tile-title" style="font-size:clamp(22px,3vw,38px);letter-spacing:0.01em;">Industrial Pumps & Art</div>
         <div class="tile-sub" style="margin-top:8px;margin-bottom:16px;">form finds function</div>
         <div class="tile-cta">Enter →</div>
