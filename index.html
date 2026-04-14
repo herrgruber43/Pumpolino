@@ -3,76 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pumpolino</title>
-  <meta name="description" content="Precision, applied."/>
+  <title>Art & Provenance — Pumpolino</title>
+  <meta name="description" content="Museums, Collections, Exhibition. We work where meaning asks for discretion."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css">
   <style>
     .page { display: flex; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
-
-    /* ── Landing tiles ── */
-    .tiles {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 5px 1fr;
-      grid-template-rows: 1fr auto;
-      min-height: 540px;
-    }
-    .tile {
-      padding: 52px 56px 52px 52px;
-      display: flex; flex-direction: column;
-      cursor: pointer; text-decoration: none; color: inherit;
-      transition: background 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .tile:hover { background: rgba(249,168,37,0.04); }
-    .tile-bar { position: absolute; top: 0; left: 0; right: 0; height: 10px; transition: height 0.3s; }
-    .tile-bar.blue  { background: var(--blue); }
-    .tile-bar.red   { background: var(--red); }
-    .tile:hover .tile-bar { height: 14px; }
-    .tile-3-row:hover .tile-3 .tile-bar { height: 14px; }
-
-    .tile-number { font-size: 8px; letter-spacing: 0.3em; color: #ccc; font-weight: 300; margin-bottom: 40px; margin-top: 22px; }
-    .tile-title {
-      font-family: var(--font-display);
-      font-size: clamp(38px, 5.5vw, 60px);
-      font-weight: 400; letter-spacing: -0.04em;
-      color: var(--black); line-height: 1; text-transform: lowercase; margin-bottom: 10px;
-    }
-    .tile-sub { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #aaa; font-weight: 300; margin-bottom: 36px; }
-    .tile-body { font-size: 14px; line-height: 1.75; color: #888; font-weight: 300; font-style: italic; max-width: 300px; }
-    .tile-body strong { font-style: normal; font-weight: 400; color: var(--black); }
-    .spacer { flex: 1; }
-    .tile-cta { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: #ccc; font-weight: 300; transition: color 0.25s, letter-spacing 0.3s; margin-top: 40px; }
-    .tile:hover .tile-cta { color: var(--black); letter-spacing: 0.52em; }
-    .tile-3-row:hover .tile-cta { color: var(--black); letter-spacing: 0.52em; }
-
-    .tile-divider { background: var(--black); width: 5px; }
-
-    /* Third tile spans full width */
-    .tile-3-row {
-      grid-column: 1 / -1;
-      border-top: var(--border-thick);
-      cursor: pointer; text-decoration: none; color: inherit;
-      transition: background 0.3s;
-    }
-    .tile-3-row:hover { background: rgba(249,168,37,0.04); }
-    .tile-3 {
-      padding: 32px 52px 48px 52px;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .tile-3-bar { position: absolute; top: 0; left: 0; right: 0; height: 10px; background: var(--yellow); transition: height 0.3s; }
-
-    @media (max-width: 760px) {
-      .tiles { grid-template-columns: 1fr; grid-template-rows: auto; display: flex; flex-direction: column; }
-      .tile-divider { width: 100%; height: 5px; flex-shrink: 0; }
-      .tile-3-row { grid-column: unset; }
-      .tile { padding: 36px 28px; }
-      .tile-3 { padding: 28px 28px 40px 28px; }
-    }
+    .page-main { flex: 1; padding: 52px 56px 72px 52px; position: relative; z-index: 10; }
+    @media (max-width: 760px) { .page-main { padding: 36px 28px 56px 28px; } }
   </style>
 </head>
 <body>
@@ -87,6 +27,7 @@
 </button>
 
 <div class="nav-overlay" id="nav-overlay">
+  <a class="nav-overlay-item" href="/"><span class="nav-overlay-num">↩</span>Home</a>
   <a class="nav-overlay-item" href="/process"><span class="nav-overlay-num">01</span>Process & Intelligence</a>
   <a class="nav-overlay-item" href="/art"><span class="nav-overlay-num">02</span>Art & Provenance</a>
   <a class="nav-overlay-item" href="/pumps-and-art"><span class="nav-overlay-num">03</span>Industrial Pumps & Art</a>
@@ -106,66 +47,41 @@
       </div>
     </div>
     <div class="header-nav-cell">
+      <a class="nav-link" href="/">← Home</a>
       <a class="nav-link" href="/contact">Contact</a>
     </div>
   </header>
 
-  <main class="tiles">
+  <main class="page-main">
+    <div style="height:10px;background:var(--red);margin:-52px -56px 52px -52px;"></div>
 
-    <!-- Tile 1 -->
-    <a class="tile" href="/process">
-      <div class="tile-bar blue"></div>
-      <div class="tile-number">01</div>
-      <div class="tile-title">Process &<br>Intelligence</div>
-      <div class="tile-sub">Consulting · Data · AI</div>
-      <div class="tile-body">We work where <strong>complexity asks for calm.</strong></div>
-      <div class="spacer"></div>
-      <div class="tile-cta">Enter →</div>
-    </a>
-
-    <div class="tile-divider"></div>
-
-    <!-- Tile 2 -->
-    <a class="tile" href="/art">
-      <div class="tile-bar red"></div>
-      <div class="tile-number">02</div>
-      <div class="tile-title">Art &<br>Provenance</div>
-      <div class="tile-sub">Museums · Collections · Exhibition</div>
-      <div class="tile-body">We work where <strong>meaning asks for discretion.</strong></div>
-      <div class="spacer"></div>
-      <div class="tile-cta">Enter →</div>
-    </a>
-
-    <!-- Tile 3 — full width -->
-    <a class="tile-3-row" href="/pumps-and-art">
-      <div class="tile-3">
-        <div class="tile-3-bar"></div>
-        <div class="tile-number" style="margin-top:0;margin-bottom:12px;">03</div>
-        <div class="tile-title" style="font-size:clamp(22px,3vw,38px);letter-spacing:0.01em;">Industrial Pumps & Art</div>
-        <div class="tile-sub" style="margin-top:8px;margin-bottom:16px;">form finds function</div>
-        <div class="tile-cta">Enter →</div>
-        <br><br>
-      </div>
-    </a>
-
+    <div style="max-width:860px;">
+      <div class="exp-title" id="a-title"></div>
+      <div class="exp-sub" id="a-sub"></div>
+      <div class="exp-intro" id="a-intro"></div>
+      <div class="exp-body" id="a-body"></div>
+    </div>
   </main>
 
-  <footer class="site-footer" style="justify-content:center;">
+  <footer class="site-footer">
+    <a class="footer-right" href="/">← Home</a>
     <span style="display:flex;gap:24px;">
       <a class="footer-right" href="/contact">Contact</a>
       <a class="footer-right" href="/legal">Legal Notice</a>
-      <span class="footer-left">pumpolino.com</span>
     </span>
   </footer>
-  <div class="footer-bottom-corners">
-    <div class="m-corner-black"></div>
-    <div class="m-corner-3"></div>
-  </div>
 
 </div>
 
 <script src="/assets/content.js"></script>
 <script src="/assets/shared.js"></script>
-<script>initShared();</script>
+<script>
+  initShared();
+  var a = CONTENT.art;
+  document.getElementById('a-title').innerHTML  = a.title;
+  document.getElementById('a-sub').textContent  = a.sub;
+  document.getElementById('a-intro').innerHTML  = a.intro;
+  document.getElementById('a-body').innerHTML   = a.body;
+</script>
 </body>
 </html>
