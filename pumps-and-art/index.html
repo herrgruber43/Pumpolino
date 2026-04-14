@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title id="seo-title"></title>
+  <meta name="description" id="seo-desc" content=""/>
+  <meta property="og:title" id="seo-og-title" content=""/>
+  <meta property="og:description" id="seo-og-desc" content=""/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://pumpolino.com"/>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Industrial Pumps & Art — Pumpolino</title>
-  <meta name="description" content="Form finds function. Precision as a shared language."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -99,6 +103,15 @@
   html += '<p style="font-size:14px;line-height:1.9;color:#999;font-weight:300;font-style:italic;max-width:640px;border-top:var(--border);padding-top:32px;margin-bottom:0;">' + c.closing + '</p>';
 
   document.getElementById('pu-content').innerHTML = html;
+</script>
+<script>
+  (function() {
+    var s = CONTENT.seo.pumps;
+    document.getElementById('seo-title').textContent = s.title;
+    document.getElementById('seo-desc').setAttribute('content', s.description);
+    document.getElementById('seo-og-title').setAttribute('content', s.title);
+    document.getElementById('seo-og-desc').setAttribute('content', s.description);
+  })();
 </script>
 </body>
 </html>
