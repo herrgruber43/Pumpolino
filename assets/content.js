@@ -5,6 +5,34 @@ var CONTENT = {
     url:     'pumpolino.com',
   },
 
+  /* ── SEO metadata per page ── */
+  seo: {
+    home: {
+      title:       'Pumpolino — Precision, applied.',
+      description: 'Pumpolino combines industrial process consulting, data architecture and applied AI with art provenance and collection management. Precision, applied.',
+    },
+    process: {
+      title:       'Process & Intelligence — Pumpolino',
+      description: 'Consulting, data architecture and AI for industrial operations. ServiceFlow and FlowSales bring structure, automation and sales intelligence to complex environments.',
+    },
+    art: {
+      title:       'Art & Provenance — Pumpolino',
+      description: 'Pumpolino accompanies works of art through acquisition, placement and exhibition — in dialogue with museums, foundations and private collections.',
+    },
+    pumps: {
+      title:       'Industrial Pumps & Art — Pumpolino',
+      description: 'Two fields, one discipline. Pumpolino applies the same logic of precision, documentation and long-term value management to industrial systems and cultural assets alike.',
+    },
+    contact: {
+      title:       'Contact — Pumpolino',
+      description: 'Get in touch with Pumpolino. We reply personally — no templates, no automation.',
+    },
+    legal: {
+      title:       'Legal Notice — Pumpolino',
+      description: 'Legal notice and privacy information for pumpolino.com.',
+    },
+  },
+
   nav: {
     process:  'Process & Intelligence',
     art:      'Art & Provenance',
