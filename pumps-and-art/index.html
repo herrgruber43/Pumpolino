@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Industrial Pumps & Art — Pumpolino</title>
-  <meta name="description" content="Form finds function. Precision as a shared language."/>
+  <title>Process & Intelligence — Pumpolino</title>
+  <meta name="description" content="Consulting, Data, AI. We work where complexity asks for calm."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -12,7 +12,13 @@
   <style>
     .page { display: flex; flex-direction: column; min-height: 100vh; padding: 12px 0 0 12px; }
     .page-main { flex: 1; padding: 52px 56px 72px 52px; position: relative; z-index: 10; }
-    @media (max-width: 760px) { .page-main { padding: 36px 28px 56px 28px; } }
+    .page-bar { height: 10px; background: var(--blue); margin: 0 -56px 0 -52px; position: relative; left: -52px; width: calc(100% + 108px); margin-bottom: 40px; }
+    .page-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; max-width: 1100px; margin-bottom: 56px; }
+    @media (max-width: 760px) {
+      .page-main { padding: 36px 28px 56px 28px; }
+      .page-grid { grid-template-columns: 1fr; gap: 28px; }
+      .p1-product { max-width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -53,13 +59,53 @@
   </header>
 
   <main class="page-main">
-    <div style="height:10px;background:var(--yellow);margin:-52px -56px 52px -52px;"></div>
+    <div style="height:10px;background:var(--blue);margin:-52px -56px 52px -52px;"></div>
 
-    <div style="text-align:center;margin-bottom:48px;">
-      <div class="exp-title" id="pu-title" style="font-size:clamp(32px,4vw,48px);"></div>
+    <div style="max-width:860px;">
+      <div class="exp-title" id="p-title"></div>
+      <div class="exp-sub" id="p-sub"></div>
+      <div class="exp-intro" id="p-intro"></div>
+      <div class="exp-body" id="p-body"></div>
     </div>
 
-    <div id="pu-content" style="max-width:860px;margin:0 auto;width:100%;"></div>
+    <!-- ServiceFlow -->
+    <div class="p1-product service" id="product-service">
+      <div class="p1-product-trigger" onclick="toggleProduct('product-service')">
+        <div class="p1-product-trigger-left">
+          <div class="p1-product-title" id="sf-title"></div>
+          <div class="p1-product-sub" id="sf-sub"></div>
+        </div>
+        <div class="p1-product-trigger-arrow">+</div>
+      </div>
+      <div class="p1-product-body">
+        <div class="p1-product-body-inner">
+          <p class="p1-product-lead" id="sf-lead"></p>
+          <div class="p1-features" id="sf-features"></div>
+          <div class="p1-steps-label" id="sf-steps-label"></div>
+          <div class="p1-steps" id="sf-steps"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FlowSales -->
+    <div class="p1-product sales" id="product-sales">
+      <div class="p1-product-trigger" onclick="toggleProduct('product-sales')">
+        <div class="p1-product-trigger-left">
+          <div class="p1-product-title" id="fls-title"></div>
+          <div class="p1-product-sub" id="fls-sub"></div>
+        </div>
+        <div class="p1-product-trigger-arrow">+</div>
+      </div>
+      <div class="p1-product-body">
+        <div class="p1-product-body-inner">
+          <p class="p1-product-lead" id="fls-lead"></p>
+          <div class="p1-features" id="fls-features"></div>
+          <div class="p1-steps-label" id="fls-steps-label"></div>
+          <div class="p1-steps" id="fls-steps"></div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer class="site-footer">
@@ -77,29 +123,42 @@
 <script>
   initShared();
 
-  var c = CONTENT.pumps;
-  document.getElementById('pu-title').textContent = c.title;
+  var p = CONTENT.process;
 
-  var html = '<p style="font-size:15px;line-height:1.85;color:#555;font-weight:300;max-width:680px;margin-bottom:64px;">' + c.intro + '</p>';
+  document.getElementById('p-title').innerHTML = p.title;
+  document.getElementById('p-sub').textContent  = p.sub;
+  document.getElementById('p-intro').innerHTML  = p.intro;
+  document.getElementById('p-body').innerHTML   = p.body;
 
-  c.sections.forEach(function(s) {
-    var accentVar = s.accent === 'blue' ? 'var(--blue)' : s.accent === 'red' ? 'var(--red)' : 'var(--yellow)';
-    html += '<div style="margin-bottom:56px;border-top:var(--border);padding-top:32px;">';
-    html += '<div style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,30px);letter-spacing:-0.03em;color:var(--black);margin-bottom:14px;">' + s.title + '</div>';
-    html += '<p style="font-size:14px;line-height:1.9;color:#666;font-weight:300;margin-bottom:32px;max-width:640px;">' + s.lead + '</p>';
-    s.features.forEach(function(f, fi) {
-      var mb = fi < s.features.length - 1 ? 'margin-bottom:24px;' : '';
-      html += '<div style="padding-left:24px;border-left:2px solid ' + accentVar + ';' + mb + '">';
-      html += '<div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--black);font-weight:400;margin-bottom:8px;">' + f.label + '</div>';
-      html += '<p style="font-size:13px;line-height:1.85;color:#777;font-weight:300;margin:0;">' + f.text + '</p>';
-      html += '</div>';
-    });
-    html += '</div>';
-  });
+  var sf = p.serviceflow;
+  document.getElementById('sf-title').textContent = sf.title;
+  document.getElementById('sf-sub').textContent   = sf.sub;
+  document.getElementById('sf-lead').textContent  = sf.lead;
+  document.getElementById('sf-steps-label').textContent = sf.stepsLabel;
 
-  html += '<p style="font-size:14px;line-height:1.9;color:#999;font-weight:300;font-style:italic;max-width:640px;border-top:var(--border);padding-top:32px;margin-bottom:0;">' + c.closing + '</p>';
+  document.getElementById('sf-features').innerHTML = sf.features.map(function(f){
+    return '<div class="p1-feature"><div class="p1-feature-label">'+f.label+'</div><p class="p1-feature-text">'+f.text+'</p></div>';
+  }).join('');
+  document.getElementById('sf-steps').innerHTML = sf.steps.map(function(s,i){
+    return '<div class="p1-step"><div class="p1-step-num">'+(i+1)+'</div><div class="p1-step-body"><div class="p1-step-title">'+s.title+'</div><div class="p1-step-desc">'+s.text+'</div></div></div>';
+  }).join('');
 
-  document.getElementById('pu-content').innerHTML = html;
+  var fls = p.flowsales;
+  document.getElementById('fls-title').textContent = fls.title;
+  document.getElementById('fls-sub').textContent   = fls.sub;
+  document.getElementById('fls-lead').textContent  = fls.lead;
+  document.getElementById('fls-steps-label').textContent = fls.stepsLabel;
+
+  document.getElementById('fls-features').innerHTML = fls.features.map(function(f){
+    return '<div class="p1-feature"><div class="p1-feature-label">'+f.label+'</div><p class="p1-feature-text">'+f.text+'</p></div>';
+  }).join('');
+  document.getElementById('fls-steps').innerHTML = fls.steps.map(function(s,i){
+    return '<div class="p1-step"><div class="p1-step-num">'+(i+1)+'</div><div class="p1-step-body"><div class="p1-step-title">'+s.title+'</div><div class="p1-step-desc">'+s.text+'</div></div></div>';
+  }).join('');
+
+  function toggleProduct(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
 </script>
 </body>
 </html>
