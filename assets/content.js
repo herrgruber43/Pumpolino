@@ -1,34 +1,34 @@
 var CONTENT = {
 
   site: {
-    tagline: 'Precision, applied.',
+    tagline: 'for a world full of flow',
     url:     'pumpolino.com',
   },
 
   /* ── SEO metadata per page ── */
   seo: {
     home: {
-      title:       'Pumpolino — Precision, applied.',
-      description: 'Pumpolino combines industrial process consulting, data architecture and applied AI with art provenance and collection management. Precision, applied.',
+      title:       'Pumpolino: Process Intelligence, Art Provenance and Industrial Consulting',
+      description: 'Pumpolino applies precision to complex problems, from industrial process consulting and AI-driven operations to art provenance and collection management.',
     },
     process: {
-      title:       'Process & Intelligence — Pumpolino',
-      description: 'Consulting, data architecture and AI for industrial operations. ServiceFlow and FlowSales bring structure, automation and sales intelligence to complex environments.',
+      title:       'Process Intelligence Consulting for Industry | Pumpolino',
+      description: 'Discover how process intelligence consulting transforms complex industrial operations through data architecture, AI, and automation that actually works.',
     },
     art: {
-      title:       'Art & Provenance — Pumpolino',
-      description: 'Pumpolino accompanies works of art through acquisition, placement and exhibition — in dialogue with museums, foundations and private collections.',
+      title:       'Art Provenance Consulting for Museums and Collections | Pumpolino',
+      description: 'Pumpolino accompanies works of art through acquisition, placement and exhibition, working with museums, foundations and private collections with discretion and expertise.',
     },
     pumps: {
-      title:       'Industrial Pumps & Art — Pumpolino',
-      description: 'Two fields, one discipline. Pumpolino applies the same logic of precision, documentation and long-term value management to industrial systems and cultural assets alike.',
+      title:       'Industrial Asset Management Where Engineering Meets Culture | Pumpolino',
+      description: 'Discover how the same discipline of precision, documentation and long-term value management applies equally to industrial systems and cultural assets.',
     },
     contact: {
-      title:       'Contact — Pumpolino',
-      description: 'Get in touch with Pumpolino. We reply personally — no templates, no automation.',
+      title:       'Contact Pumpolino and Get in Touch',
+      description: 'Reach out to Pumpolino for process intelligence consulting, art provenance or industrial expertise. We reply personally, no templates, no automation.',
     },
     legal: {
-      title:       'Legal Notice — Pumpolino',
+      title:       'Legal Notice | Pumpolino',
       description: 'Legal notice and privacy information for pumpolino.com.',
     },
   },
