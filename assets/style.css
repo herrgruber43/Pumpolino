@@ -25,8 +25,8 @@ body {
 /* ── Mondrian frame ── */
 .m-left  { position: fixed; left: 0; top: 0; bottom: 0; width: 12px; background: var(--black); z-index: 200; }
 .m-top   { position: fixed; left: 0; right: 0; top: 0; height: 12px; background: var(--black); z-index: 200; max-width: 100vw; }
-.m-corner-1 { position: absolute; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); }
-.m-corner-2 { position: absolute; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); }
+.m-corner-1 { position: absolute; top: 12px; left: 12px; width: 92px; height: 92px; background: var(--red); z-index: 190; border-right: var(--border); border-bottom: var(--border); cursor: pointer; transition: opacity 0.3s; }
+.m-corner-2 { position: absolute; top: 12px; right: 0; width: 140px; height: 64px; background: var(--blue); z-index: 190; border-left: var(--border); border-bottom: var(--border); cursor: pointer; transition: opacity 0.3s; }
 .m-corner-3 { width: 180px; height: 80px; background: var(--yellow); z-index: 190; border-left: var(--border); border-top: var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
 .m-corner-3:hover { opacity: 0.6; }
 .m-corner-1.hidden, .m-corner-2.hidden, .m-corner-3.hidden { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
