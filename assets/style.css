@@ -44,7 +44,8 @@ body {
 }
 .header-left-cell { display: flex; flex-direction: column; }
 .header-center-cell { border-left: var(--border); border-right: var(--border); display: flex; flex-direction: column; align-items: center; position: relative; }
-.header-center-cell::before { content: ''; position: absolute; top: -12px; left: -3px; right: -3px; height: 12px; border-left: var(--border); border-right: var(--border); }
+.header-center-cell::before { content: ''; position: absolute; top: -12px; left: -3px; width: 3px; height: 12px; background: var(--black); }
+.header-center-cell::after { content: ''; position: absolute; top: -12px; right: -3px; width: 3px; height: 12px; background: var(--black); }
 .logo {
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
   text-decoration: none; cursor: pointer; padding: 0 22px 10px 22px;
