@@ -36,7 +36,13 @@
 
 <div class="m-left"></div>
 <div class="m-top"></div>
+<div class="m-corner-1" onclick="this.classList.add('hidden')"></div>
+<div class="m-corner-2" onclick="this.classList.add('hidden')"></div>
 
+
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
 
 <div class="nav-overlay" id="nav-overlay">
   <a class="nav-overlay-item" href="/">Home</a>
@@ -47,14 +53,6 @@
 </div>
 
 <div class="page">
-
-  <div class="header-top-corners">
-    <div class="m-corner-1" onclick="this.classList.add('hidden')">
-    <button class="hamburger" id="hamburger" onclick="event.stopPropagation();toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-    <div class="m-corner-spacer"></div>
-    <div class="m-corner-2" onclick="this.classList.add('hidden')"></div>
-  </div>
   <header class="site-header">
     <div class="header-left-cell"></div>
     <div class="header-center-cell">
