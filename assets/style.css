@@ -41,7 +41,6 @@ body {
   align-items: stretch;
   border-bottom: var(--border-thick);
   background: var(--white);
-  margin-left: -12px; padding-left: 12px;
 }
 .header-left-cell { display: flex; flex-direction: column; }
 .header-center-cell { border-left: var(--border); border-right: var(--border); display: flex; flex-direction: column; align-items: center; }
