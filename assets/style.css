@@ -43,13 +43,14 @@ body {
   align-items: stretch;
   border-bottom: var(--border-thick);
   background: var(--white);
+  margin-left: -12px; padding-left: 12px;
 }
 .header-left-cell { display: flex; flex-direction: column; }
 .header-center-cell { border-left: var(--border); border-right: var(--border); display: flex; flex-direction: column; align-items: center; }
 .logo {
   display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-  text-decoration: none; cursor: pointer; padding: 0 22px 14px 22px;
-  height: 110px; flex-shrink: 0; width: 100%;
+  text-decoration: none; cursor: pointer; padding: 0 22px 10px 22px;
+  height: 72px; flex-shrink: 0; width: 100%;
 }
 .logo-word {
   font-family: var(--font-display);
@@ -59,7 +60,7 @@ body {
 }
 .logo-word em { font-style: italic; color: var(--red); }
 .header-tagline-cell {
-  border-top: var(--border); padding: 18px 22px 22px 22px;
+  border-top: var(--border); padding: 10px 22px 12px 22px;
   display: flex; align-items: center; justify-content: center; flex: 1; width: 100%;
 }
 .header-tagline {
